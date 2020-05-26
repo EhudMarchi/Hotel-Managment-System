@@ -57,7 +57,7 @@ new FormModel {
 				name: "logoutButton"
 				"text": "Logout"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 695
+				"x": 650
 				"y": 385
 				"width": 115
 				"height": 45
@@ -90,6 +90,14 @@ new FormModel {
 				"y": 25
 				"width": 385
 				"height": 65
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "backgroundLabel"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 805
+				"height": 475
+				"x": 0
+				"y": 0
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

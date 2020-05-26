@@ -4,6 +4,7 @@
 
 package HotelManagementUIview;
 
+import java.awt.event.*;
 import HotelManagementController.ActManager;
 import HotelManagementController.Program;
 import HotelManagmentModel.Guest;
@@ -45,6 +46,7 @@ public class MainScreen extends JFrame {
         modeLabel = new JLabel();
         requestsButton = new JButton();
         label1 = new JLabel();
+        backgroundLabel = new JLabel();
 
         //======== this ========
         setResizable(false);
@@ -54,20 +56,20 @@ public class MainScreen extends JFrame {
 
         //---- createReservationButton ----
         createReservationButton.setText("Create Reservation");
-        contentPane.add(createReservationButton);
-        createReservationButton.setBounds(265, 110, 295, 30);
-        createReservationButton.addActionListener(new ActionListener() {
+        createReservationButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 try {
                     createReservationButtonMouseClicked();
-                } catch (FileNotFoundException fileNotFoundException) {
-                    fileNotFoundException.printStackTrace();
-                } catch (IOException | ParseException ioException) {
+                } catch (IOException ioException) {
                     ioException.printStackTrace();
+                } catch (ParseException parseException) {
+                    parseException.printStackTrace();
                 }
             }
         });
+        contentPane.add(createReservationButton);
+        createReservationButton.setBounds(265, 110, 295, 30);
 
         //---- viewRoomsAvailabilityButton ----
         viewRoomsAvailabilityButton.setText("View Rooms Availability");
@@ -92,7 +94,7 @@ public class MainScreen extends JFrame {
         //---- logoutButton ----
         logoutButton.setText("Logout");
         contentPane.add(logoutButton);
-        logoutButton.setBounds(695, 385, 115, 45);
+        logoutButton.setBounds(650, 385, 115, 45);
 
         //---- modeLabel ----
         modeLabel.setText("Receptionist");
@@ -112,6 +114,8 @@ public class MainScreen extends JFrame {
         label1.setHorizontalAlignment(SwingConstants.CENTER);
         contentPane.add(label1);
         label1.setBounds(215, 25, 385, 65);
+        contentPane.add(backgroundLabel);
+        backgroundLabel.setBounds(0, 0, 805, 475);
 
         {
             // compute preferred size
@@ -150,6 +154,7 @@ public class MainScreen extends JFrame {
     private JLabel modeLabel;
     private JButton requestsButton;
     private JLabel label1;
+    private JLabel backgroundLabel;
     private boolean managerMode;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

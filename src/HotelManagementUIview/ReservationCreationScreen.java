@@ -4,8 +4,13 @@
 
 package HotelManagementUIview;
 
+import HotelManagementController.ActManager;
+import HotelManagementController.Program;
+
 import java.awt.*;
+import java.awt.event.*;
 import java.text.ParseException;
+import java.time.LocalDate;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.text.MaskFormatter;
@@ -21,12 +26,18 @@ public class ReservationCreationScreen extends JFrame {
 //            modeLabel.setText("Manager");
 //        }
     }
+    private void viewRoomsAvailabilityButtonMouseClicked() {
+//        LocalDate checkOut=new LocalDate(checkIOutYearSpinner.getValue(),checkOutMonthSpinner.getValue(),(Integer)checkIOutDaySpinner.getValue());
+//        LocalDate checkIn=new LocalDate((Integer)checkIInYearSpinner3.getValue(),(Integer)checkInMonthSpinner.getValue(),(Integer)checkIInDaySpinner.getValue());
 
+        Program.roomsScreen=new AvailableRoomsScreen(LocalDate.now(),LocalDate.now());
+        Program.roomsScreen.setVisible(true);
+        Program.actionScreen.setVisible(false);
+    }
     private void initComponents() throws ParseException {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Ehud
-        createReservationButton = new JButton();
-        modeLabel = new JLabel();
+        continueToPaymentButton = new JButton();
         Headlinelabel = new JLabel();
         guestNamelabel = new JLabel();
         guestEmaillabel = new JLabel();
@@ -40,8 +51,15 @@ public class ReservationCreationScreen extends JFrame {
         guestsAmountSpinner2 = new JSpinner();
         checkInLabel = new JLabel();
         checkInLabel2 = new JLabel();
-        roomsNumberSpinner2 = new JSpinner();
-        scrollPane1 = new JScrollPane();
+        checkInMonthSpinner = new JSpinner();
+        checkIInDaySpinner = new JSpinner();
+        checkOutMonthSpinner = new JSpinner();
+        checkIOutDaySpinner = new JSpinner();
+        checkIInYearSpinner3 = new JSpinner();
+        checkIOutYearSpinner = new JSpinner();
+        viewRoomsAvailabilityButton = new JButton();
+        priceLabel = new JLabel();
+        backgroundLabel = new JLabel();
 
         //======== this ========
         setResizable(false);
@@ -49,16 +67,10 @@ public class ReservationCreationScreen extends JFrame {
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
-        //---- createReservationButton ----
-        createReservationButton.setText("Create Reservation");
-        contentPane.add(createReservationButton);
-        createReservationButton.setBounds(245, 340, 295, 30);
-
-        //---- modeLabel ----
-        modeLabel.setText("Receptionist");
-        modeLabel.setForeground(Color.blue);
-        contentPane.add(modeLabel);
-        modeLabel.setBounds(new Rectangle(new Point(15, 10), modeLabel.getPreferredSize()));
+        //---- continueToPaymentButton ----
+        continueToPaymentButton.setText("Continue To Payment");
+        contentPane.add(continueToPaymentButton);
+        continueToPaymentButton.setBounds(250, 370, 295, 30);
 
         //---- Headlinelabel ----
         Headlinelabel.setText("\"Reservation Creation\"");
@@ -101,29 +113,70 @@ public class ReservationCreationScreen extends JFrame {
         //---- roomsNumberSpinner ----
         roomsNumberSpinner.setModel(new SpinnerNumberModel(1, 1, null, 1));
         contentPane.add(roomsNumberSpinner);
-        roomsNumberSpinner.setBounds(245, 215, 35, 25);
+        roomsNumberSpinner.setBounds(245, 215, 50, 25);
 
         //---- guestsAmountSpinner2 ----
         guestsAmountSpinner2.setModel(new SpinnerNumberModel(1, 1, null, 1));
         contentPane.add(guestsAmountSpinner2);
-        guestsAmountSpinner2.setBounds(245, 190, 35, 25);
+        guestsAmountSpinner2.setBounds(245, 190, 50, 25);
 
         //---- checkInLabel ----
         checkInLabel.setText("Check In:");
         contentPane.add(checkInLabel);
-        checkInLabel.setBounds(65, 245, 165, 30);
+        checkInLabel.setBounds(65, 285, 165, 30);
 
         //---- checkInLabel2 ----
         checkInLabel2.setText("Check Out:");
         contentPane.add(checkInLabel2);
-        checkInLabel2.setBounds(65, 270, 165, 30);
+        checkInLabel2.setBounds(65, 310, 165, 30);
 
-        //---- roomsNumberSpinner2 ----
-        roomsNumberSpinner2.setModel(new SpinnerDateModel(new java.util.Date((System.currentTimeMillis()/60000)*60000), new java.util.Date((System.currentTimeMillis()/60000)*60000), null, java.util.Calendar.DAY_OF_MONTH));
-        contentPane.add(roomsNumberSpinner2);
-        roomsNumberSpinner2.setBounds(240, 245, 190, 25);
-        contentPane.add(scrollPane1);
-        scrollPane1.setBounds(new Rectangle(new Point(435, 185), scrollPane1.getPreferredSize()));
+        //---- checkInMonthSpinner ----
+        checkInMonthSpinner.setModel(new SpinnerNumberModel(1, 1, 12, 1));
+        contentPane.add(checkInMonthSpinner);
+        checkInMonthSpinner.setBounds(315, 285, 65, 25);
+
+        //---- checkIInDaySpinner ----
+        checkIInDaySpinner.setModel(new SpinnerNumberModel(1, 1, 31, 1));
+        contentPane.add(checkIInDaySpinner);
+        checkIInDaySpinner.setBounds(250, 285, 45, 25);
+
+        //---- checkOutMonthSpinner ----
+        checkOutMonthSpinner.setModel(new SpinnerNumberModel(1, 1, 12, 1));
+        contentPane.add(checkOutMonthSpinner);
+        checkOutMonthSpinner.setBounds(315, 315, 65, 25);
+
+        //---- checkIOutDaySpinner ----
+        checkIOutDaySpinner.setModel(new SpinnerNumberModel(1, 1, 31, 1));
+        contentPane.add(checkIOutDaySpinner);
+        checkIOutDaySpinner.setBounds(250, 315, 45, 25);
+
+        //---- checkIInYearSpinner3 ----
+        checkIInYearSpinner3.setModel(new SpinnerNumberModel(20, 20, 99, 1));
+        contentPane.add(checkIInYearSpinner3);
+        checkIInYearSpinner3.setBounds(400, 285, 60, 25);
+
+        //---- checkIOutYearSpinner ----
+        checkIOutYearSpinner.setModel(new SpinnerNumberModel(20, 20, 99, 1));
+        contentPane.add(checkIOutYearSpinner);
+        checkIOutYearSpinner.setBounds(400, 315, 60, 25);
+
+        //---- viewRoomsAvailabilityButton ----
+        viewRoomsAvailabilityButton.setText("View Rooms Availability");
+        viewRoomsAvailabilityButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                viewRoomsAvailabilityButtonMouseClicked();
+            }
+        });
+        contentPane.add(viewRoomsAvailabilityButton);
+        viewRoomsAvailabilityButton.setBounds(510, 300, 175, 30);
+
+        //---- priceLabel ----
+        priceLabel.setText("Price: ");
+        contentPane.add(priceLabel);
+        priceLabel.setBounds(300, 410, 170, priceLabel.getPreferredSize().height);
+        contentPane.add(backgroundLabel);
+        backgroundLabel.setBounds(0, 0, 805, 475);
 
         {
             // compute preferred size
@@ -146,8 +199,7 @@ public class ReservationCreationScreen extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Ehud
-    private JButton createReservationButton;
-    private JLabel modeLabel;
+    private JButton continueToPaymentButton;
     private JLabel Headlinelabel;
     private JLabel guestNamelabel;
     private JLabel guestEmaillabel;
@@ -161,7 +213,14 @@ public class ReservationCreationScreen extends JFrame {
     private JSpinner guestsAmountSpinner2;
     private JLabel checkInLabel;
     private JLabel checkInLabel2;
-    private JSpinner roomsNumberSpinner2;
-    private JScrollPane scrollPane1;
+    private JSpinner checkInMonthSpinner;
+    private JSpinner checkIInDaySpinner;
+    private JSpinner checkOutMonthSpinner;
+    private JSpinner checkIOutDaySpinner;
+    private JSpinner checkIInYearSpinner3;
+    private JSpinner checkIOutYearSpinner;
+    private JButton viewRoomsAvailabilityButton;
+    private JLabel priceLabel;
+    private JLabel backgroundLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

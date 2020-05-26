@@ -59,6 +59,17 @@ new FormModel {
 				"y": 340
 				"width": 100
 			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "loginLabel"
+				"text": "Login Screen"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 19, false )
+				"horizontalAlignment": 0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 385
+				"height": 65
+				"x": 135
+				"y": 25
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
 			"size": new java.awt.Dimension( 660, 480 )

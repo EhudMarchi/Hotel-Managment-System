@@ -14,12 +14,15 @@ public class LoginScreen extends JFrame {
     private JLabel userNameLabel;
     private JLabel passwordLabel;
     private JTextField userNameTextField;
+
     public JButton getLoginButton() {
         return loginButton;
     }
+
     private JButton loginButton;
     private JPasswordField passwordTextField;
     private JCheckBox managerCheckBox;
+    private JLabel loginLabel;
 
     public LoginScreen() {
         userNameLabel = new JLabel();
@@ -28,6 +31,7 @@ public class LoginScreen extends JFrame {
         loginButton = new JButton();
         passwordTextField = new JPasswordField();
         managerCheckBox = new JCheckBox();
+        loginLabel = new JLabel();
         //======== this ========
         setBackground(Color.darkGray);
         var contentPane = getContentPane();
@@ -53,6 +57,12 @@ public class LoginScreen extends JFrame {
         //---- loginButton ----
         loginButton.setText("Login");
         loginButton.setFont(loginButton.getFont().deriveFont(loginButton.getFont().getStyle() | Font.ITALIC));
+        //----LoginLabel-----
+        loginLabel.setText("Login Label");
+        loginLabel.setFont(loginLabel.getFont().deriveFont(loginLabel.getFont().getStyle() | Font.BOLD, loginLabel.getFont().getSize() + 19f));
+        loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        contentPane.add(loginLabel);
+        loginLabel.setBounds(135, 25, 385, 65);
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,12 +112,7 @@ public class LoginScreen extends JFrame {
             this.dispose();
         }
     }
-
 }
-
-
-
-
 
 
 
