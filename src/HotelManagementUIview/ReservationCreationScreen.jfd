@@ -1,0 +1,168 @@
+JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.6" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"resizable": false
+			"title": "MainScreen"
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "createReservationButton"
+				"text": "Create Reservation"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 245
+				"y": 340
+				"width": 295
+				"height": 30
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "modeLabel"
+				"text": "Receptionist"
+				"foreground": sfield java.awt.Color blue
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 15
+				"y": 10
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "Headlinelabel"
+				"text": "\"Reservation Creation\""
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 19, false )
+				"horizontalAlignment": 0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 195
+				"y": 25
+				"width": 385
+				"height": 65
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "guestNamelabel"
+				"text": "Guest Name:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 65
+				"y": 110
+				"width": 75
+				"height": 30
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "guestEmaillabel"
+				"text": "Guest Email:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 75
+				"height": 30
+				"x": 65
+				"y": 130
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "guestPhonelabel"
+				"text": "Guest Phone Number:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 190
+				"height": 30
+				"x": 65
+				"y": 150
+			} )
+			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+				name: "phoneTextField"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 245
+				"y": 155
+				"width": 290
+			} )
+			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+				name: "emailTextField"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 290
+				"height": 19
+				"x": 245
+				"y": 135
+			} )
+			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+				name: "NameTextField"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 290
+				"height": 19
+				"x": 245
+				"y": 115
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "guestsAmountlabel"
+				"text": "Guests Amount:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 190
+				"height": 30
+				"x": 65
+				"y": 185
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "guestsAmountlabel2"
+				"text": "Rooms Number:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 190
+				"height": 30
+				"x": 65
+				"y": 210
+			} )
+			add( new FormComponent( "javax.swing.JSpinner" ) {
+				name: "roomsNumberSpinner"
+				"model": &SpinnerNumberModel0 new javax.swing.SpinnerNumberModel {
+					minimum: 1
+					value: 1
+				}
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 245
+				"y": 215
+				"width": 35
+				"height": 25
+			} )
+			add( new FormComponent( "javax.swing.JSpinner" ) {
+				name: "guestsAmountSpinner2"
+				"model": #SpinnerNumberModel0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 35
+				"height": 25
+				"x": 245
+				"y": 190
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "checkInLabel"
+				"text": "Check In:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 165
+				"height": 30
+				"x": 65
+				"y": 245
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "checkInLabel2"
+				"text": "Check Out:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 165
+				"height": 30
+				"x": 65
+				"y": 270
+			} )
+			add( new FormComponent( "javax.swing.JSpinner" ) {
+				name: "roomsNumberSpinner2"
+				"model": new javax.swing.SpinnerDateModel {
+					start: new java.util.Date( -9223372036854775808l )
+					value: new java.util.Date( -9223372036854775808l )
+				}
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 190
+				"height": 25
+				"x": 240
+				"y": 245
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 435
+				"y": 185
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 805, 505 )
+			"location": new java.awt.Point( 0, 0 )
+		} )
+	}
+}
