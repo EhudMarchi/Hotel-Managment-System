@@ -21,11 +21,11 @@ new FormModel {
 				name: "twinLabel"
 				"text": "Available Twin Rooms:"
 				"opaque": true
-				"background": new java.awt.Color( 0, 0, 0, 255 )
+				"background": sfield java.awt.Color black
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 190
 				"y": 75
-				"width": 385
+				"width": 195
 				"height": 35
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -34,7 +34,7 @@ new FormModel {
 				"opaque": true
 				"background": new java.awt.Color( 0, 0, 0, 255 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 385
+				"width": 195
 				"height": 35
 				"x": 190
 				"y": 115
@@ -44,8 +44,9 @@ new FormModel {
 				"text": "Available Deluxe Rooms:"
 				"opaque": true
 				"background": new java.awt.Color( 0, 0, 0, 255 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 385
+				"width": 195
 				"height": 35
 				"x": 190
 				"y": 155
@@ -55,8 +56,9 @@ new FormModel {
 				"text": "Available Premium Rooms:"
 				"opaque": true
 				"background": new java.awt.Color( 0, 0, 0, 255 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 385
+				"width": 195
 				"height": 35
 				"x": 190
 				"y": 195
@@ -66,10 +68,51 @@ new FormModel {
 				"text": "Available Suite Rooms:"
 				"opaque": true
 				"background": new java.awt.Color( 0, 0, 0, 255 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 385
+				"width": 195
 				"height": 35
 				"x": 190
+				"y": 235
+			} )
+			add( new FormComponent( "javax.swing.JSpinner" ) {
+				name: "twinSpinner"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 515
+				"y": 75
+				"width": 50
+				"height": 35
+			} )
+			add( new FormComponent( "javax.swing.JSpinner" ) {
+				name: "familySpinner"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 515
+				"y": 115
+				"width": 50
+				"height": 35
+			} )
+			add( new FormComponent( "javax.swing.JSpinner" ) {
+				name: "deluxeSpinner"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 50
+				"height": 35
+				"x": 515
+				"y": 155
+			} )
+			add( new FormComponent( "javax.swing.JSpinner" ) {
+				name: "premiumSpinner"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 50
+				"height": 35
+				"x": 515
+				"y": 195
+			} )
+			add( new FormComponent( "javax.swing.JSpinner" ) {
+				name: "suiteSpinner"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 50
+				"height": 35
+				"x": 515
 				"y": 235
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -87,6 +130,8 @@ new FormModel {
 		} )
 	}
 }
+
+
 
 
 

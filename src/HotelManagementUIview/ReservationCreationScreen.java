@@ -4,8 +4,6 @@
 
 package HotelManagementUIview;
 
-import javax.swing.plaf.*;
-import HotelManagementController.ActManager;
 import HotelManagementController.Program;
 
 import java.awt.*;
@@ -13,27 +11,97 @@ import java.awt.event.*;
 import java.text.ParseException;
 import java.time.LocalDate;
 import javax.swing.*;
-import javax.swing.border.*;
 import javax.swing.text.MaskFormatter;
 
 /**
  * @author Ehud
  */
 public class ReservationCreationScreen extends JFrame {
-    public ReservationCreationScreen(boolean isManager) throws ParseException {
+    public ReservationCreationScreen() throws ParseException {
         initComponents();
 //        managerMode=isManager;
 //        if(managerMode) {
 //            modeLabel.setText("Manager");
+//        CreateFormat(phoneTextField);
 //        }
     }
+    private void CreateFormat(JFormattedTextField text) throws ParseException {
+        MaskFormatter mf1 = new MaskFormatter("###-#######");
+        mf1.setPlaceholderCharacter('_');
+        text = new JFormattedTextField(mf1);
+    }
+    private String NameValidation(String Name)
+    {
+        char[] validation=Name.toCharArray();
+        boolean error=false;
+        String errorText="";
+        for(int i=0;i<Name.length();i++)
+        {
+            if (!Character.isLetter(validation[i]))
+            {
+                error=true;
+            }
+            if(error)
+                errorText="Your name is not valid";
+        }
+
+        return errorText;
+    }
+//    private String GuestsAmountValidation(String chosenRooms) {
+//        int capacity=0;
+//        char[] validation=chosenRooms.toCharArray();
+//        String errorText="";
+//        for(int i=0;i<chosenRooms.length();i++)
+//        {
+//            if (Character.isDigit(validation[i]))
+//            {
+//                int roomsAmount = Integer.parseInt(String.valueOf(validation[i]));
+//                if(chosenRooms.charAt(i+2)=='F')
+//                {
+//                    capacity+=(4* roomsAmount);
+//                }
+//                else
+//                {
+//                    capacity+=(2* roomsAmount);
+//                }
+//            }
+//        }
+//        if(Integer.parseInt(guestsAmountSpinner2.getValue().toString())>capacity)
+//            errorText="Too many guests for the chosen rooms";
+//
+//        return errorText;
+//    }
+
+
     private void viewRoomsAvailabilityButtonMouseClicked() {
 //        LocalDate checkOut=new LocalDate(checkIOutYearSpinner.getValue(),checkOutMonthSpinner.getValue(),(Integer)checkIOutDaySpinner.getValue());
 //        LocalDate checkIn=new LocalDate((Integer)checkIInYearSpinner3.getValue(),(Integer)checkInMonthSpinner.getValue(),(Integer)checkIInDaySpinner.getValue());
 
-        Program.roomsScreen=new AvailableRoomsScreen(LocalDate.now(),LocalDate.now());
+        Program.roomsScreen=new AvailableRoomsScreen(LocalDate.now(),LocalDate.now(),roomsDescription);
         Program.roomsScreen.setVisible(true);
         Program.actionScreen.setVisible(false);
+    }
+
+    private void backButtonMouseClicked() {
+        Program.baseScreen.setVisible(true);
+        Program.actionScreen.dispose();
+    }
+    public  String ValueSender(Object obj)
+    {
+        return obj.toString();
+    }
+
+    private void continueToPaymentButtonMouseClicked() {
+        if ((NameValidation(NameTextField.getText())!=""))
+        {
+            JOptionPane.showMessageDialog(null,NameValidation(NameTextField.toString()),
+                    "Notice",JOptionPane.WARNING_MESSAGE);
+        }
+            else {
+            Program.paymentScreen = new PaymentScreen();//values
+            Program.paymentScreen.setVisible(true);
+            Program.actionScreen.setVisible(false);
+        }
     }
     private void initComponents() throws ParseException {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -43,12 +111,14 @@ public class ReservationCreationScreen extends JFrame {
         guestNamelabel = new JLabel();
         guestEmaillabel = new JLabel();
         guestPhonelabel = new JLabel();
-        phoneTextField = new JFormattedTextField();
+        MaskFormatter mf1 = new MaskFormatter("###-#######");
+        mf1.setPlaceholderCharacter('_');
+        phoneTextField = new JFormattedTextField(mf1);
         emailTextField = new JFormattedTextField();
+        emailTextField.setText("email@example.com");
         NameTextField = new JFormattedTextField();
         guestsAmountlabel = new JLabel();
-        guestsAmountlabel2 = new JLabel();
-        roomsNumberSpinner = new JSpinner();
+        roomsDescription = new JLabel();
         guestsAmountSpinner2 = new JSpinner();
         checkInLabel = new JLabel();
         checkInLabel2 = new JLabel();
@@ -60,6 +130,7 @@ public class ReservationCreationScreen extends JFrame {
         checkIOutYearSpinner = new JSpinner();
         viewRoomsAvailabilityButton = new JButton();
         priceLabel = new JLabel();
+        backButton = new JButton();
         backgroundLabel = new JLabel();
 
         //======== this ========
@@ -70,6 +141,12 @@ public class ReservationCreationScreen extends JFrame {
 
         //---- continueToPaymentButton ----
         continueToPaymentButton.setText("Continue To Payment");
+        continueToPaymentButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                continueToPaymentButtonMouseClicked();
+            }
+        });
         contentPane.add(continueToPaymentButton);
         continueToPaymentButton.setBounds(250, 370, 295, 30);
 
@@ -106,15 +183,16 @@ public class ReservationCreationScreen extends JFrame {
         contentPane.add(guestsAmountlabel);
         guestsAmountlabel.setBounds(65, 185, 190, 30);
 
-        //---- guestsAmountlabel2 ----
-        guestsAmountlabel2.setText("Rooms Number:");
-        contentPane.add(guestsAmountlabel2);
-        guestsAmountlabel2.setBounds(65, 210, 190, 30);
-
-        //---- roomsNumberSpinner ----
-        roomsNumberSpinner.setModel(new SpinnerNumberModel(1, 1, null, 1));
-        contentPane.add(roomsNumberSpinner);
-        roomsNumberSpinner.setBounds(245, 215, 50, 25);
+        //---- roomsDescription ----
+        roomsDescription.setText("Rooms description");
+        roomsDescription.setHorizontalTextPosition(SwingConstants.CENTER);
+        roomsDescription.setOpaque(true);
+        roomsDescription.setBackground(Color.black);
+        roomsDescription.setForeground(Color.white);
+        roomsDescription.setHorizontalAlignment(SwingConstants.CENTER);
+        roomsDescription.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        contentPane.add(roomsDescription);
+        roomsDescription.setBounds(65, 225, 680, 45);
 
         //---- guestsAmountSpinner2 ----
         guestsAmountSpinner2.setModel(new SpinnerNumberModel(1, 1, null, 1));
@@ -174,8 +252,20 @@ public class ReservationCreationScreen extends JFrame {
 
         //---- priceLabel ----
         priceLabel.setText("Price: ");
+        priceLabel.setOpaque(true);
         contentPane.add(priceLabel);
         priceLabel.setBounds(300, 410, 170, priceLabel.getPreferredSize().height);
+
+        //---- backButton ----
+        backButton.setText("Back");
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                backButtonMouseClicked();
+            }
+        });
+        contentPane.add(backButton);
+        backButton.setBounds(700, 425, 100, 30);
 
         //---- backgroundLabel ----
         backgroundLabel.setIcon(new ImageIcon(getClass().getResource("/MainScreenBackground.png")));
@@ -212,8 +302,7 @@ public class ReservationCreationScreen extends JFrame {
     private JFormattedTextField emailTextField;
     private JFormattedTextField NameTextField;
     private JLabel guestsAmountlabel;
-    private JLabel guestsAmountlabel2;
-    private JSpinner roomsNumberSpinner;
+    private JLabel roomsDescription;
     private JSpinner guestsAmountSpinner2;
     private JLabel checkInLabel;
     private JLabel checkInLabel2;
@@ -225,6 +314,7 @@ public class ReservationCreationScreen extends JFrame {
     private JSpinner checkIOutYearSpinner;
     private JButton viewRoomsAvailabilityButton;
     private JLabel priceLabel;
+    private JButton backButton;
     private JLabel backgroundLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
