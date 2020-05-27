@@ -60,9 +60,6 @@ public class ReservationCreationScreen extends JFrame {
         checkIOutYearSpinner = new JSpinner();
         viewRoomsAvailabilityButton = new JButton();
         priceLabel = new JLabel();
-        dayLabel = new JLabel();
-        yearLabel = new JLabel();
-        monthLabel = new JLabel();
         backgroundLabel = new JLabel();
 
         //======== this ========
@@ -85,68 +82,34 @@ public class ReservationCreationScreen extends JFrame {
 
         //---- guestNamelabel ----
         guestNamelabel.setText("Guest Name:");
-        guestNamelabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        guestNamelabel.setBackground(Color.black);
-        guestNamelabel.setOpaque(true);
-        guestNamelabel.setForeground(Color.white);
         contentPane.add(guestNamelabel);
         guestNamelabel.setBounds(65, 110, 75, 30);
 
         //---- guestEmaillabel ----
         guestEmaillabel.setText("Guest Email:");
-        guestEmaillabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        guestEmaillabel.setOpaque(true);
-        guestEmaillabel.setBackground(Color.black);
-        guestEmaillabel.setForeground(Color.white);
         contentPane.add(guestEmaillabel);
         guestEmaillabel.setBounds(65, 130, 75, 30);
 
         //---- guestPhonelabel ----
         guestPhonelabel.setText("Guest Phone Number:");
-        guestPhonelabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        guestPhonelabel.setOpaque(true);
-        guestPhonelabel.setBackground(Color.black);
-        guestPhonelabel.setForeground(Color.white);
         contentPane.add(guestPhonelabel);
-        guestPhonelabel.setBounds(65, 150, 125, 30);
-
-        //---- phoneTextField ----
-        phoneTextField.setBackground(Color.black);
-        phoneTextField.setForeground(Color.white);
+        guestPhonelabel.setBounds(65, 150, 190, 30);
         contentPane.add(phoneTextField);
         phoneTextField.setBounds(245, 155, 290, phoneTextField.getPreferredSize().height);
-
-        //---- emailTextField ----
-        emailTextField.setBackground(Color.black);
-        emailTextField.setForeground(Color.white);
-        emailTextField.setFont(new Font("Segoe UI", Font.BOLD, 12));
         contentPane.add(emailTextField);
         emailTextField.setBounds(245, 135, 290, 19);
-
-        //---- NameTextField ----
-        NameTextField.setBackground(Color.black);
-        NameTextField.setForeground(Color.white);
-        NameTextField.setFont(new Font("Segoe UI", Font.BOLD, 12));
         contentPane.add(NameTextField);
         NameTextField.setBounds(245, 115, 290, 19);
 
         //---- guestsAmountlabel ----
         guestsAmountlabel.setText("Guests Amount:");
-        guestsAmountlabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        guestsAmountlabel.setOpaque(true);
-        guestsAmountlabel.setBackground(Color.black);
-        guestsAmountlabel.setForeground(Color.white);
         contentPane.add(guestsAmountlabel);
-        guestsAmountlabel.setBounds(65, 185, 95, 30);
+        guestsAmountlabel.setBounds(65, 185, 190, 30);
 
         //---- guestsAmountlabel2 ----
         guestsAmountlabel2.setText("Rooms Number:");
-        guestsAmountlabel2.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        guestsAmountlabel2.setOpaque(true);
-        guestsAmountlabel2.setBackground(Color.black);
-        guestsAmountlabel2.setForeground(Color.white);
         contentPane.add(guestsAmountlabel2);
-        guestsAmountlabel2.setBounds(65, 210, 95, 30);
+        guestsAmountlabel2.setBounds(65, 210, 190, 30);
 
         //---- roomsNumberSpinner ----
         roomsNumberSpinner.setModel(new SpinnerNumberModel(1, 1, null, 1));
@@ -155,28 +118,18 @@ public class ReservationCreationScreen extends JFrame {
 
         //---- guestsAmountSpinner2 ----
         guestsAmountSpinner2.setModel(new SpinnerNumberModel(1, 1, null, 1));
-        guestsAmountSpinner2.setBackground(Color.black);
-        guestsAmountSpinner2.setForeground(Color.white);
         contentPane.add(guestsAmountSpinner2);
         guestsAmountSpinner2.setBounds(245, 190, 50, 25);
 
         //---- checkInLabel ----
         checkInLabel.setText("Check In:");
-        checkInLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        checkInLabel.setOpaque(true);
-        checkInLabel.setBackground(Color.black);
-        checkInLabel.setForeground(Color.white);
         contentPane.add(checkInLabel);
-        checkInLabel.setBounds(65, 285, 50, 30);
+        checkInLabel.setBounds(65, 285, 165, 30);
 
         //---- checkInLabel2 ----
         checkInLabel2.setText("Check Out:");
-        checkInLabel2.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        checkInLabel2.setOpaque(true);
-        checkInLabel2.setBackground(Color.black);
-        checkInLabel2.setForeground(Color.white);
         contentPane.add(checkInLabel2);
-        checkInLabel2.setBounds(65, 315, 65, 25);
+        checkInLabel2.setBounds(65, 310, 165, 30);
 
         //---- checkInMonthSpinner ----
         checkInMonthSpinner.setModel(new SpinnerNumberModel(1, 1, 12, 1));
@@ -223,33 +176,6 @@ public class ReservationCreationScreen extends JFrame {
         priceLabel.setText("Price: ");
         contentPane.add(priceLabel);
         priceLabel.setBounds(300, 410, 170, priceLabel.getPreferredSize().height);
-
-        //---- dayLabel ----
-        dayLabel.setText("Day:");
-        dayLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        dayLabel.setOpaque(true);
-        dayLabel.setBackground(Color.black);
-        dayLabel.setForeground(Color.white);
-        contentPane.add(dayLabel);
-        dayLabel.setBounds(260, 255, 25, 30);
-
-        //---- yearLabel ----
-        yearLabel.setText("Year:");
-        yearLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        yearLabel.setOpaque(true);
-        yearLabel.setBackground(Color.black);
-        yearLabel.setForeground(Color.white);
-        contentPane.add(yearLabel);
-        yearLabel.setBounds(415, 255, 30, 30);
-
-        //---- monthLabel ----
-        monthLabel.setText("Month:");
-        monthLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        monthLabel.setOpaque(true);
-        monthLabel.setBackground(Color.black);
-        monthLabel.setForeground(Color.white);
-        contentPane.add(monthLabel);
-        monthLabel.setBounds(325, 255, 45, 30);
 
         //---- backgroundLabel ----
         backgroundLabel.setIcon(new ImageIcon(getClass().getResource("/MainScreenBackground.png")));
@@ -299,9 +225,6 @@ public class ReservationCreationScreen extends JFrame {
     private JSpinner checkIOutYearSpinner;
     private JButton viewRoomsAvailabilityButton;
     private JLabel priceLabel;
-    private JLabel dayLabel;
-    private JLabel yearLabel;
-    private JLabel monthLabel;
     private JLabel backgroundLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
