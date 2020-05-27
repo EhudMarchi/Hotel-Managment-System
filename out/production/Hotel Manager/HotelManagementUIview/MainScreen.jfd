@@ -93,6 +93,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "backgroundLabel"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/MainScreenBackground.png" )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 805
 				"height": 475

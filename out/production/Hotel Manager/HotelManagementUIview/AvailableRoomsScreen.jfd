@@ -8,15 +8,20 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "dateslabel"
 				"text": "Dates:"
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
+				"background": new java.awt.Color( 0, 0, 0, 255 )
+				"opaque": true
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 135
+				"x": 250
 				"y": 20
-				"width": 485
+				"width": 270
 				"height": 25
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "twinLabel"
 				"text": "Available Twin Rooms:"
+				"opaque": true
+				"background": new java.awt.Color( 0, 0, 0, 255 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 190
 				"y": 75
@@ -26,6 +31,8 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "familyLabel"
 				"text": "Available Family Rooms:"
+				"opaque": true
+				"background": new java.awt.Color( 0, 0, 0, 255 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 385
 				"height": 35
@@ -35,6 +42,8 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "deluxeLabel"
 				"text": "Available Deluxe Rooms:"
+				"opaque": true
+				"background": new java.awt.Color( 0, 0, 0, 255 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 385
 				"height": 35
@@ -44,6 +53,8 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "premiumLabel"
 				"text": "Available Premium Rooms:"
+				"opaque": true
+				"background": new java.awt.Color( 0, 0, 0, 255 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 385
 				"height": 35
@@ -53,11 +64,22 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "suiteLabel"
 				"text": "Available Suite Rooms:"
+				"opaque": true
+				"background": new java.awt.Color( 0, 0, 0, 255 )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 385
 				"height": 35
 				"x": 190
 				"y": 235
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "backgroundLabel"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/MainScreenBackground.png" )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 805
+				"height": 475
+				"x": 0
+				"y": 0
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
@@ -65,3 +87,7 @@ new FormModel {
 		} )
 	}
 }
+
+
+
+

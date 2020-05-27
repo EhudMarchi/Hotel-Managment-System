@@ -114,6 +114,9 @@ public class MainScreen extends JFrame {
         label1.setHorizontalAlignment(SwingConstants.CENTER);
         contentPane.add(label1);
         label1.setBounds(215, 25, 385, 65);
+
+        //---- backgroundLabel ----
+        backgroundLabel.setIcon(new ImageIcon(getClass().getResource("/MainScreenBackground.png")));
         contentPane.add(backgroundLabel);
         backgroundLabel.setBounds(0, 0, 805, 475);
 
