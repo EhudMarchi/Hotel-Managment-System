@@ -111,14 +111,11 @@ public class ReservationCreationScreen extends JFrame {
         guestNamelabel = new JLabel();
         guestEmaillabel = new JLabel();
         guestPhonelabel = new JLabel();
-        MaskFormatter mf1 = new MaskFormatter("###-#######");
-        mf1.setPlaceholderCharacter('_');
-        phoneTextField = new JFormattedTextField(mf1);
+        phoneTextField = new JFormattedTextField();
         emailTextField = new JFormattedTextField();
-        emailTextField.setText("email@example.com");
         NameTextField = new JFormattedTextField();
         guestsAmountlabel = new JLabel();
-        roomsDescription = new JLabel();
+        guestsAmountlabel2 = new JLabel();
         guestsAmountSpinner2 = new JSpinner();
         checkInLabel = new JLabel();
         checkInLabel2 = new JLabel();
@@ -141,12 +138,6 @@ public class ReservationCreationScreen extends JFrame {
 
         //---- continueToPaymentButton ----
         continueToPaymentButton.setText("Continue To Payment");
-        continueToPaymentButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                continueToPaymentButtonMouseClicked();
-            }
-        });
         contentPane.add(continueToPaymentButton);
         continueToPaymentButton.setBounds(250, 370, 295, 30);
 
@@ -183,16 +174,14 @@ public class ReservationCreationScreen extends JFrame {
         contentPane.add(guestsAmountlabel);
         guestsAmountlabel.setBounds(65, 185, 190, 30);
 
-        //---- roomsDescription ----
-        roomsDescription.setText("Rooms description");
-        roomsDescription.setHorizontalTextPosition(SwingConstants.CENTER);
-        roomsDescription.setOpaque(true);
-        roomsDescription.setBackground(Color.black);
-        roomsDescription.setForeground(Color.white);
-        roomsDescription.setHorizontalAlignment(SwingConstants.CENTER);
-        roomsDescription.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        contentPane.add(roomsDescription);
-        roomsDescription.setBounds(65, 225, 680, 45);
+        //---- guestsAmountlabel2 ----
+        guestsAmountlabel2.setText("Rooms Number:");
+        guestsAmountlabel2.setHorizontalTextPosition(SwingConstants.CENTER);
+        guestsAmountlabel2.setOpaque(true);
+        guestsAmountlabel2.setBackground(Color.black);
+        guestsAmountlabel2.setForeground(Color.white);
+        contentPane.add(guestsAmountlabel2);
+        guestsAmountlabel2.setBounds(245, 225, 285, 45);
 
         //---- guestsAmountSpinner2 ----
         guestsAmountSpinner2.setModel(new SpinnerNumberModel(1, 1, null, 1));
@@ -302,7 +291,7 @@ public class ReservationCreationScreen extends JFrame {
     private JFormattedTextField emailTextField;
     private JFormattedTextField NameTextField;
     private JLabel guestsAmountlabel;
-    private JLabel roomsDescription;
+    private JLabel guestsAmountlabel2;
     private JSpinner guestsAmountSpinner2;
     private JLabel checkInLabel;
     private JLabel checkInLabel2;

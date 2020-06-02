@@ -13,6 +13,7 @@ public class Program {
     public static JFrame baseScreen = new JFrame();
     public static JFrame actionScreen;
     public static JFrame roomsScreen;
+    public static JFrame paymentScreen;
     public static void main(String [] args) throws ParseException {
         baseScreen = new LoginScreen();
         baseScreen.setVisible(true);

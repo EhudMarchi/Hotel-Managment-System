@@ -29,6 +29,9 @@ public class AvailableRoomsScreen extends JFrame {
         deluxeLabel.setText("Available Deluxe Rooms:"+availableRooms.get(2));
         premiumLabel.setText("Available Premium Rooms:"+availableRooms.get(3));
         suiteLabel.setText("Available Suite Rooms:"+availableRooms.get(4));
+<<<<<<< HEAD
+
+=======
         SpinnerNumberModel twinModel = new SpinnerNumberModel(0,0,Integer.parseInt(availableRooms.get(0)),1);
         twinSpinner.setModel(twinModel);
         SpinnerNumberModel familyModel = new SpinnerNumberModel(0,0,Integer.parseInt(availableRooms.get(1)),1);
@@ -39,6 +42,7 @@ public class AvailableRoomsScreen extends JFrame {
         premiumSpinner.setModel(premiumModel);
         SpinnerNumberModel suiteModel = new SpinnerNumberModel(0,0,Integer.parseInt(availableRooms.get(4)),1);
         suiteSpinner.setModel(suiteModel);
+>>>>>>> c59a6f1... Payement Screen added
     }
 
     @Override
@@ -99,8 +103,6 @@ public class AvailableRoomsScreen extends JFrame {
         deluxeSpinner = new JSpinner();
         premiumSpinner = new JSpinner();
         suiteSpinner = new JSpinner();
-        backButton = new JButton();
-        selectButton = new JButton();
         backgroundLabel = new JLabel();
 
         //======== this ========
@@ -112,7 +114,6 @@ public class AvailableRoomsScreen extends JFrame {
         dateslabel.setForeground(Color.white);
         dateslabel.setBackground(Color.black);
         dateslabel.setOpaque(true);
-        dateslabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
         contentPane.add(dateslabel);
         dateslabel.setBounds(250, 20, 270, 25);
 
@@ -120,8 +121,6 @@ public class AvailableRoomsScreen extends JFrame {
         twinLabel.setText("Available Twin Rooms:");
         twinLabel.setOpaque(true);
         twinLabel.setBackground(Color.black);
-        twinLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        twinLabel.setForeground(Color.white);
         contentPane.add(twinLabel);
         twinLabel.setBounds(190, 75, 195, 35);
 
@@ -129,8 +128,6 @@ public class AvailableRoomsScreen extends JFrame {
         familyLabel.setText("Available Family Rooms:");
         familyLabel.setOpaque(true);
         familyLabel.setBackground(Color.black);
-        familyLabel.setForeground(Color.white);
-        familyLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
         contentPane.add(familyLabel);
         familyLabel.setBounds(190, 115, 195, 35);
 
@@ -139,7 +136,6 @@ public class AvailableRoomsScreen extends JFrame {
         deluxeLabel.setOpaque(true);
         deluxeLabel.setBackground(Color.black);
         deluxeLabel.setForeground(Color.white);
-        deluxeLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
         contentPane.add(deluxeLabel);
         deluxeLabel.setBounds(190, 155, 195, 35);
 
@@ -148,7 +144,6 @@ public class AvailableRoomsScreen extends JFrame {
         premiumLabel.setOpaque(true);
         premiumLabel.setBackground(Color.black);
         premiumLabel.setForeground(Color.white);
-        premiumLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
         contentPane.add(premiumLabel);
         premiumLabel.setBounds(190, 195, 195, 35);
 
@@ -157,7 +152,6 @@ public class AvailableRoomsScreen extends JFrame {
         suiteLabel.setOpaque(true);
         suiteLabel.setBackground(Color.black);
         suiteLabel.setForeground(Color.white);
-        suiteLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
         contentPane.add(suiteLabel);
         suiteLabel.setBounds(190, 235, 195, 35);
         contentPane.add(twinSpinner);
@@ -170,32 +164,6 @@ public class AvailableRoomsScreen extends JFrame {
         premiumSpinner.setBounds(515, 195, 50, 35);
         contentPane.add(suiteSpinner);
         suiteSpinner.setBounds(515, 235, 50, 35);
-
-        //---- backButton ----
-        backButton.setText("Back");
-        backButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                backButtonMouseClicked();
-            }
-        });
-        contentPane.add(backButton);
-        backButton.setBounds(645, 365, 100, 30);
-
-        //---- selectButton ----
-        selectButton.setText("Select");
-        selectButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try {
-                    selectButtonMouseClicked();
-                } catch (ParseException parseException) {
-                    parseException.printStackTrace();
-                }
-            }
-        });
-        contentPane.add(selectButton);
-        selectButton.setBounds(590, 140, 85, 30);
 
         //---- backgroundLabel ----
         backgroundLabel.setIcon(new ImageIcon(getClass().getResource("/MainScreenBackground.png")));
@@ -234,8 +202,6 @@ public class AvailableRoomsScreen extends JFrame {
     private JSpinner deluxeSpinner;
     private JSpinner premiumSpinner;
     private JSpinner suiteSpinner;
-    private JButton backButton;
-    private JButton selectButton;
     private JLabel backgroundLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

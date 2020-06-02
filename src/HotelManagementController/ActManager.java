@@ -87,9 +87,9 @@ public class ActManager {
         int[] minimuns = {Hotel.twinAmount, Hotel.familyAmount, Hotel.deluxeAmount, Hotel.premiumAmount, Hotel.suiteAmount};
         for (LocalDate i = checkIn; i.equals(checkOut) || i.isBefore(checkOut); i=i.plusDays(1))
         {
-            File dateFile = new File("C:\\Users\\march\\Desktop\\Computer Science\\הנדסת תוכנה (java)\\Hotel Manager\\src\\" + i.toString());
-            if (dateFile.exists()) {
-                lines = readLinesFromFile("C:\\Users\\march\\Desktop\\Computer Science\\הנדסת תוכנה (java)\\Hotel Manager\\src\\" + i.toString());
+            File dateFile = new File("C:\\Users\\march\\Desktop\\Computer Science\\הנדסת תוכנה (java)\\Hotel Manager\\src\\" + i.toString()+".txt");
+            if (dateFile!=null) {
+                lines = readLinesFromFile("C:\\Users\\march\\Desktop\\Computer Science\\הנדסת תוכנה (java)\\Hotel Manager\\src\\AvailableRooms");
                 for (int j = 0; j < lines.size(); j++) {
                     minimuns[j] = GetMin(minimuns[j], Integer.parseInt(lines.get(j)));
                 }

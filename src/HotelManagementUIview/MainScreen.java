@@ -77,13 +77,7 @@ public class MainScreen extends JFrame {
         createReservationButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                try {
-                    createReservationButtonMouseClicked();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                } catch (ParseException parseException) {
-                    parseException.printStackTrace();
-                }
+                createReservationButtonMouseClicked();
             }
         });
         contentPane.add(createReservationButton);
