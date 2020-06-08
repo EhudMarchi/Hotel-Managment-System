@@ -1,6 +1,3 @@
-/*
- * Created by JFormDesigner on Tue May 19 18:27:21 IDT 2020
- */
 
 package HotelManagementUIview;
 
@@ -22,35 +19,42 @@ import javax.swing.*;
 /**
  * @author Ehud
  */
-public class MainScreen extends JFrame {
+public class MainScreen extends JFrame {//Singelton Design Pettern
     public MainScreen() {
         initComponents();
     }
     public MainScreen(String name,boolean isManager)
     {
         initComponents();
-
-        boolean managerMode;
+        recepName = name;
         managerMode=isManager;
         if(managerMode) {
             modeLabel.setText("Manager");
+            requestsButton.setEnabled(true);
         }
     }
-
-    private void viewRoomsAvailabilityButtonMouseClicked() {
-        //        LocalDate checkOut=new LocalDate(checkIOutYearSpinner.getValue(),checkOutMonthSpinner.getValue(),(Integer)checkIOutDaySpinner.getValue());
-//        LocalDate checkIn=new LocalDate((Integer)checkIInYearSpinner3.getValue(),(Integer)checkInMonthSpinner.getValue(),(Integer)checkIInDaySpinner.getValue());
-
-        Program.roomsScreen=new AvailableRoomsScreen(LocalDate.now(),LocalDate.now(),null);
-        Program.roomsScreen.setVisible(true);
-        Program.baseScreen.setVisible(false);
+    private void requestsButtonMouseClicked() throws IOException {
+        if(managerMode)
+        {
+        this.setVisible(false);
+        Program.actionScreen=new RequestsScreen();
+        Program.actionScreen.setVisible(true);
     }
-
+    }
+    private void cancelReservationButtonMouseClicked() throws IOException {
+        Program.baseScreen.setEnabled(false);
+        Program.actionScreen=new CancelScreen();
+        Program.actionScreen.setVisible(true);
+    }
     private void logoutButtonMouseClicked() {
         this.dispose();
         Program.baseScreen=new LoginScreen();
         Program.baseScreen.setVisible(true);
-
+    }
+    private void changeReservationButtonMouseClicked() throws IOException {
+        Program.baseScreen.setEnabled(false);
+        Program.actionScreen=new ChangeScreen();
+        Program.actionScreen.setVisible(true);
     }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -63,7 +67,6 @@ public class MainScreen extends JFrame {
         modeLabel = new JLabel();
         requestsButton = new JButton();
         label1 = new JLabel();
-        viewRoomsAvailabilityButton2 = new JButton();
         backgroundLabel = new JLabel();
 
         //======== this ========
@@ -77,22 +80,47 @@ public class MainScreen extends JFrame {
         createReservationButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                createReservationButtonMouseClicked();
+                try {
+                    createReservationButtonMouseClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (ParseException parseException) {
+                    parseException.printStackTrace();
+                }
             }
         });
         contentPane.add(createReservationButton);
-        createReservationButton.setBounds(265, 110, 295, 30);
+        createReservationButton.setBounds(265, 120, 295, 70);
+        createReservationButton.setFont(createReservationButton.getFont().deriveFont(createReservationButton.getFont().getStyle() | Font.BOLD,20));
 
         //---- changeReservationButton ----
         changeReservationButton.setText("Change Reservation");
         contentPane.add(changeReservationButton);
         changeReservationButton.setBounds(265, 200, 295, 30);
-
+        changeReservationButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    changeReservationButtonMouseClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
         //---- cancelReservationButton ----
         cancelReservationButton.setText("Cancel Reservation");
         contentPane.add(cancelReservationButton);
         cancelReservationButton.setBounds(265, 240, 295, 30);
-
+        cancelReservationButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    cancelReservationButtonMouseClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
         //---- cancelReservationButton2 ----
         cancelReservationButton2.setText("View Guest Information");
         contentPane.add(cancelReservationButton2);
@@ -120,6 +148,16 @@ public class MainScreen extends JFrame {
         requestsButton.setEnabled(false);
         contentPane.add(requestsButton);
         requestsButton.setBounds(265, 325, 295, 30);
+        requestsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    requestsButtonMouseClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
 
         //---- label1 ----
         label1.setText("\"Hotel Name\"");
@@ -128,19 +166,9 @@ public class MainScreen extends JFrame {
         contentPane.add(label1);
         label1.setBounds(215, 25, 385, 65);
 
-        //---- viewRoomsAvailabilityButton2 ----
-        viewRoomsAvailabilityButton2.setText("View Rooms Availability");
-        viewRoomsAvailabilityButton2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                viewRoomsAvailabilityButtonMouseClicked();
-            }
-        });
-        contentPane.add(viewRoomsAvailabilityButton2);
-        viewRoomsAvailabilityButton2.setBounds(265, 155, 295, 30);
 
         //---- backgroundLabel ----
-        backgroundLabel.setIcon(new ImageIcon(getClass().getResource("/MainScreenBackground.png")));
+        backgroundLabel.setIcon(new ImageIcon(getClass().getResource("../MainScreenBackground.png")));
         contentPane.add(backgroundLabel);
         backgroundLabel.setBounds(0, 0, 805, 475);
 
@@ -165,7 +193,7 @@ public class MainScreen extends JFrame {
     private void createReservationButtonMouseClicked() throws IOException, ParseException {
 //        Reservation currentReservation = new Reservation();
 
-        Program.actionScreen=new ReservationCreationScreen();
+        Program.actionScreen=new ReservationCreationScreen(recepName);
         Program.actionScreen.setVisible(true);
         Program.baseScreen.setVisible(false);
 //        this.dispose();
@@ -180,7 +208,8 @@ public class MainScreen extends JFrame {
     private JLabel modeLabel;
     private JButton requestsButton;
     private JLabel label1;
-    private JButton viewRoomsAvailabilityButton2;
     private JLabel backgroundLabel;
+    private String recepName;
+    private boolean managerMode;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

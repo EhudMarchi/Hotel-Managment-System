@@ -1,21 +1,44 @@
-/*
- * Created by JFormDesigner on Tue Jun 02 18:37:42 IDT 2020
- */
-
 package HotelManagementUIview;
 
+import HotelManagementController.ActManager;
 import HotelManagementController.Program;
+import HotelManagmentModel.Hotel;
+import HotelManagmentModel.Reservation;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.time.LocalDate;
 import javax.swing.*;
 
 /**
  * @author Ehud
  */
 public class PaymentScreen extends JFrame {
-    public PaymentScreen() {
+    public PaymentScreen(String reservationDetails,String detailsLine,LocalDate ci,LocalDate co,String price,JLabel rooms) {
         initComponents();
+        roomsDescription=rooms;
+        dLine=detailsLine;
+        checkin=ci;
+        checkout=co;
+        descriptionLabel.setText(reservationDetails);
+        priceLabel.setText(price);
+    }
+    private void confirmButtonMouseClicked() throws IOException {
+        if(ActManager.CreditCardValidation(CreditNumber.getText()))
+        {
+            ActManager.createReservation(Hotel.numOfReservations,dLine,checkin,checkout,roomsDescription);
+            this.dispose();
+            Program.actionScreen.dispose();
+            Program.baseScreen.setVisible(true);
+            JOptionPane.showMessageDialog(null,"Your reservation was successfully added!",
+                    "Notice", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"Invalid Credit Card!",
+                    "Notice", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     private void backButtonMouseClicked() {
@@ -26,10 +49,10 @@ public class PaymentScreen extends JFrame {
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Ehud
-        textField1 = new JTextField();
+        CreditNumber = new JTextField();
         descriptionLabel = new JLabel();
         creditCardLabel = new JLabel();
-        confirmLabel = new JButton();
+        confirmButton = new JButton();
         backButton = new JButton();
         priceLabel = new JLabel();
         backgroundLabel = new JLabel();
@@ -38,14 +61,14 @@ public class PaymentScreen extends JFrame {
         setFont(new Font(Font.DIALOG, Font.PLAIN, 24));
         var contentPane = getContentPane();
         contentPane.setLayout(null);
-        contentPane.add(textField1);
-        textField1.setBounds(395, 335, 170, 35);
+        contentPane.add(CreditNumber);
+        CreditNumber.setBounds(395, 335, 170, 35);
 
         //---- descriptionLabel ----
         descriptionLabel.setOpaque(true);
         descriptionLabel.setBackground(Color.black);
         descriptionLabel.setForeground(Color.white);
-        descriptionLabel.setFont(descriptionLabel.getFont().deriveFont(descriptionLabel.getFont().getStyle() | Font.BOLD));
+        descriptionLabel.setFont(descriptionLabel.getFont().deriveFont(descriptionLabel.getFont().getStyle() | Font.BOLD,20));
         contentPane.add(descriptionLabel);
         descriptionLabel.setBounds(110, 15, 575, 310);
 
@@ -58,12 +81,21 @@ public class PaymentScreen extends JFrame {
         contentPane.add(creditCardLabel);
         creditCardLabel.setBounds(310, 335, 70, 40);
 
-        //---- confirmLabel ----
-        confirmLabel.setText("Confirm Puschase");
-        confirmLabel.setFont(confirmLabel.getFont().deriveFont(confirmLabel.getFont().getStyle() | Font.BOLD));
-        contentPane.add(confirmLabel);
-        confirmLabel.setBounds(320, 385, 195, 45);
-
+        //---- confirmButton ----
+        confirmButton.setText("Confirm Puschase");
+        confirmButton.setFont(confirmButton.getFont().deriveFont(confirmButton.getFont().getStyle() | Font.BOLD));
+        contentPane.add(confirmButton);
+        confirmButton.setBounds(320, 385, 195, 45);
+        confirmButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    confirmButtonMouseClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
         //---- backButton ----
         backButton.setText("Back");
         backButton.setFont(backButton.getFont().deriveFont(backButton.getFont().getStyle() | Font.BOLD));
@@ -86,7 +118,7 @@ public class PaymentScreen extends JFrame {
         priceLabel.setBounds(320, 435, 195, 26);
 
         //---- backgroundLabel ----
-        backgroundLabel.setIcon(new ImageIcon(getClass().getResource("/MainScreenBackground.png")));
+        backgroundLabel.setIcon(new ImageIcon(getClass().getResource("../MainScreenBackground.png")));
         contentPane.add(backgroundLabel);
         backgroundLabel.setBounds(0, 0, 805, 475);
 
@@ -111,12 +143,16 @@ public class PaymentScreen extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Ehud
-    private JTextField textField1;
+    private JTextField CreditNumber;
     private JLabel descriptionLabel;
     private JLabel creditCardLabel;
-    private JButton confirmLabel;
+    private JButton confirmButton;
     private JButton backButton;
     private JLabel priceLabel;
     private JLabel backgroundLabel;
+    private  String dLine;
+    private LocalDate checkin;
+    private LocalDate checkout;
+    private JLabel roomsDescription;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

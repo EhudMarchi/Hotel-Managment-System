@@ -1,5 +1,8 @@
 package HotelManagmentModel;
 
+import HotelManagementController.ActManager;
+
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Reservation {
@@ -9,12 +12,19 @@ public class Reservation {
     private int roomsNumber;
     private int guestAmount;
     private int creditCardNumber;
-    private String reservationNumber;
+
+    public int getReservationNumber() {
+        return reservationNumber;
+    }
+
+    private int reservationNumber;
     private int price;
     private  String receptionistName;
 
-    public Reservation() {
-
+    public Reservation() throws IOException {
+        Hotel.numOfReservations++;
+        reservationNumber=Hotel.numOfReservations;
+        ActManager.ChangeLastResNumber(reservationNumber);
     }
     public Reservation(Guest guest,LocalDate checkInDate,LocalDate checkOutDate , int roomsNumber, int guestAmount, int creditCardNumber,String receptionistName)
     {
@@ -25,7 +35,10 @@ public class Reservation {
         this.guestAmount=guestAmount;
         this.creditCardNumber=creditCardNumber;
         this.receptionistName=receptionistName;
+        Hotel.numOfReservations++;
+        reservationNumber=Hotel.numOfReservations;
     }
+
     public Guest getGuest() {
         return guest;
     }
@@ -50,9 +63,6 @@ public class Reservation {
         return creditCardNumber;
     }
 
-    public String getReservationNumber() {
-        return reservationNumber;
-    }
 
     public int getPrice() {
         return price;

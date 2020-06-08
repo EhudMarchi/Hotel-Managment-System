@@ -3,6 +3,7 @@ package HotelManagementController;
 import HotelManagementUIview.LoginScreen;
 import HotelManagementUIview.MainScreen;
 import HotelManagementUIview.ReservationCreationScreen;
+import HotelManagmentModel.Hotel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ public class Program {
     public static JFrame roomsScreen;
     public static JFrame paymentScreen;
     public static void main(String [] args) throws ParseException {
+        Hotel myHotel=new Hotel();
         baseScreen = new LoginScreen();
         baseScreen.setVisible(true);
 //        baseScreen=new ReservationCreationScreen();

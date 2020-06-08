@@ -1,6 +1,7 @@
 package HotelManagementUIview;
 import HotelManagementController.ActManager;
 import HotelManagementController.Program;
+import HotelManagmentModel.Hotel;
 
 import javax.swing.JOptionPane;
 import java.awt.event.*;
@@ -10,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class LoginScreen extends JFrame {
-
+    private JButton exitButton;
     private JLabel userNameLabel;
     private JLabel passwordLabel;
     private JTextField userNameTextField;
@@ -18,6 +19,10 @@ public class LoginScreen extends JFrame {
     public JButton getLoginButton() {
         return loginButton;
     }
+    private void exitButtonMouseClicked() {
+        System.exit(0);
+    }
+
 
     private JButton loginButton;
     private JPasswordField passwordTextField;
@@ -32,11 +37,23 @@ public class LoginScreen extends JFrame {
         passwordTextField = new JPasswordField();
         managerCheckBox = new JCheckBox();
         loginLabel = new JLabel();
+        exitButton = new JButton();
         //======== this ========
         setBackground(Color.darkGray);
         var contentPane = getContentPane();
         contentPane.setLayout(null);
         this.setResizable(false);
+        //---- exitButton ----
+        exitButton.setText("Exit");
+        exitButton.setFont(exitButton.getFont().deriveFont(exitButton.getFont().getStyle() | Font.BOLD));
+        contentPane.add(exitButton);
+        exitButton.setBounds(new Rectangle(new Point(15, 350), exitButton.getPreferredSize()));
+        exitButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                exitButtonMouseClicked();
+            }
+        });
         //---- managerCheckBox ----
         managerCheckBox.setText("as manager");
         contentPane.add(managerCheckBox);
@@ -89,8 +106,8 @@ public class LoginScreen extends JFrame {
                 preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
             }
             Insets insets = contentPane.getInsets();
-            preferredSize.width += insets.right;
-            preferredSize.height += insets.bottom;
+            preferredSize.width += insets.right+20;
+            preferredSize.height += insets.bottom+20;
             contentPane.setMinimumSize(preferredSize);
             contentPane.setPreferredSize(preferredSize);
         }
