@@ -19,7 +19,5 @@ public class Program {
         Hotel myHotel=new Hotel();
         baseScreen = new LoginScreen();
         baseScreen.setVisible(true);
-//        baseScreen=new ReservationCreationScreen();
-//        baseScreen.setVisible(true);
     }
 }

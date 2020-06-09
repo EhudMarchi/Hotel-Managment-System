@@ -63,7 +63,7 @@ public class PaymentScreen extends JFrame {
         contentPane.setLayout(null);
         contentPane.add(CreditNumber);
         CreditNumber.setBounds(395, 335, 170, 35);
-
+        setTitle("Payment");
         //---- descriptionLabel ----
         descriptionLabel.setOpaque(true);
         descriptionLabel.setBackground(Color.black);

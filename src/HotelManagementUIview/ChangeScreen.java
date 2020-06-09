@@ -27,6 +27,8 @@ public class ChangeScreen extends JFrame {
     private void confirmButtonMouseClicked() throws IOException {
         ActManager.AddChangeRequest(resNumComboBox.getSelectedItem().toString(),propertyComboBox.getSelectedItem().toString(),reasonComboBox.getSelectedItem().toString());
         System.out.println("Request added: " + resNumComboBox.getSelectedItem().toString()+" "+reasonComboBox.getSelectedItem().toString());
+        JOptionPane.showMessageDialog(null,"Your request was successfully sent to the manager!",
+                "Notice", JOptionPane.WARNING_MESSAGE);
     }
     private void initComponents() throws IOException {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents

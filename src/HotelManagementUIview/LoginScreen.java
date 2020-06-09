@@ -43,6 +43,7 @@ public class LoginScreen extends JFrame {
         var contentPane = getContentPane();
         contentPane.setLayout(null);
         this.setResizable(false);
+        setTitle("Login");
         //---- exitButton ----
         exitButton.setText("Exit");
         exitButton.setFont(exitButton.getFont().deriveFont(exitButton.getFont().getStyle() | Font.BOLD));

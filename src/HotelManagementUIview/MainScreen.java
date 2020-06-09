@@ -2,18 +2,12 @@
 package HotelManagementUIview;
 
 import java.awt.event.*;
-import HotelManagementController.ActManager;
+
 import HotelManagementController.Program;
-import HotelManagmentModel.Guest;
-import HotelManagmentModel.Reservation;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
-import java.time.LocalDate;
 import javax.swing.*;
 
 /**
@@ -46,6 +40,11 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         Program.actionScreen=new CancelScreen();
         Program.actionScreen.setVisible(true);
     }
+    private void viewReservationDetailsButtonMouseClicked() throws IOException {
+        Program.baseScreen.setEnabled(false);
+        Program.actionScreen=new ViewReservationDetailsScreen();
+        Program.actionScreen.setVisible(true);
+    }
     private void logoutButtonMouseClicked() {
         this.dispose();
         Program.baseScreen=new LoginScreen();
@@ -62,7 +61,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         createReservationButton = new JButton();
         changeReservationButton = new JButton();
         cancelReservationButton = new JButton();
-        cancelReservationButton2 = new JButton();
+        viewReservationDetailsButton = new JButton();
         logoutButton = new JButton();
         modeLabel = new JLabel();
         requestsButton = new JButton();
@@ -122,10 +121,19 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
             }
         });
         //---- cancelReservationButton2 ----
-        cancelReservationButton2.setText("View Guest Information");
-        contentPane.add(cancelReservationButton2);
-        cancelReservationButton2.setBounds(265, 285, 295, 30);
-
+        viewReservationDetailsButton.setText("View Reservation Details");
+        contentPane.add(viewReservationDetailsButton);
+        viewReservationDetailsButton.setBounds(265, 285, 295, 30);
+        viewReservationDetailsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    viewReservationDetailsButtonMouseClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
         //---- logoutButton ----
         logoutButton.setText("Logout");
         logoutButton.addMouseListener(new MouseAdapter() {
@@ -203,7 +211,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
     private JButton createReservationButton;
     private JButton changeReservationButton;
     private JButton cancelReservationButton;
-    private JButton cancelReservationButton2;
+    private JButton viewReservationDetailsButton;
     private JButton logoutButton;
     private JLabel modeLabel;
     private JButton requestsButton;

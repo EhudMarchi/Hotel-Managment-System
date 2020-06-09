@@ -1,48 +1,33 @@
-/*
- * Created by JFormDesigner on Mon Jun 08 19:00:26 IDT 2020
- */
-
 package HotelManagementUIview;
 
 import HotelManagementController.ActManager;
 import HotelManagementController.Program;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import javax.swing.*;
 
-/**
- * @author Ehud
- */
-public class CancelScreen extends JFrame {
-    public CancelScreen() throws IOException {
+public class ViewReservationDetailsScreen extends JFrame {
+
+    public ViewReservationDetailsScreen() throws IOException {
         initComponents();
     }
     private void backButtonMouseClicked() {
         Program.baseScreen.setEnabled(true);
         Program.actionScreen.dispose();
     }
-    private void confirmButtonMouseClicked() throws IOException {
-        ActManager.AddCancelRequest(resNumComboBox.getSelectedItem().toString(),reasonComboBox.getSelectedItem().toString());
-        System.out.println("Request added: " + resNumComboBox.getSelectedItem().toString()+" "+reasonComboBox.getSelectedItem().toString());
-        JOptionPane.showMessageDialog(null,"Your request was successfully sent to the manager!",
-                "Notice", JOptionPane.WARNING_MESSAGE);
-    }
     private void initComponents() throws IOException {
         resNumComboBox = new JComboBox(ActManager.ReadReservationsNumber(resNumComboBox));
         reservatioLabel = new JLabel();
-        String[] reasonsStrings = { "Illness", "Unsatisfied", "Bad Weather", "Global Epidemic", "Other" };
-        reasonComboBox = new JComboBox(reasonsStrings);
-        reasonLabel = new JLabel();
-        confirmButton = new JButton();
         backButton = new JButton();
+        descriptionLabel = new JLabel();
         backgroundLabel = new JLabel();
 
         //======== this ========
         setResizable(false);
-        setTitle("Cancel");
+        setTitle("View Reservation Details");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -51,7 +36,7 @@ public class CancelScreen extends JFrame {
         resNumComboBox.setForeground(Color.black);
         resNumComboBox.setFont(resNumComboBox.getFont().deriveFont(resNumComboBox.getFont().getStyle() | Font.BOLD));
         contentPane.add(resNumComboBox);
-        resNumComboBox.setBounds(80, 60, 145, resNumComboBox.getPreferredSize().height);
+        resNumComboBox.setBounds(70, 120, 145, resNumComboBox.getPreferredSize().height);
 
         //---- reservatioLabel ----
         reservatioLabel.setText("Reservation Number:");
@@ -61,41 +46,15 @@ public class CancelScreen extends JFrame {
         reservatioLabel.setOpaque(true);
         reservatioLabel.setBackground(Color.black);
         contentPane.add(reservatioLabel);
-        reservatioLabel.setBounds(85, 30, 145, 25);
+        reservatioLabel.setBounds(75, 90, 145, 25);
+        //--------descriptionLabel--------
+        descriptionLabel.setOpaque(true);
+        descriptionLabel.setBackground(Color.black);
+        descriptionLabel.setForeground(Color.white);
+        descriptionLabel.setFont(descriptionLabel.getFont().deriveFont(descriptionLabel.getFont().getStyle() | Font.BOLD,14));
+        contentPane.add(descriptionLabel);
+        descriptionLabel.setBounds(250, 30, 430, 190);
 
-        //---- comboBox2 ----
-        reasonComboBox.setBackground(Color.white);
-        reasonComboBox.setForeground(Color.black);
-        reasonComboBox.setFont(reasonComboBox.getFont().deriveFont(reasonComboBox.getFont().getStyle() | Font.BOLD));
-        contentPane.add(reasonComboBox);
-        reasonComboBox.setBounds(310, 60, 365, reasonComboBox.getPreferredSize().height);
-
-        //---- reasonLabel ----
-        reasonLabel.setText("Cancel Reason:");
-        reasonLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        reasonLabel.setFont(reasonLabel.getFont().deriveFont(reasonLabel.getFont().getStyle() | Font.BOLD));
-        reasonLabel.setForeground(Color.white);
-        reasonLabel.setOpaque(true);
-        reasonLabel.setBackground(Color.black);
-        contentPane.add(reasonLabel);
-        reasonLabel.setBounds(425, 35, 145, 25);
-
-        //---- confirmButton ----
-        confirmButton.setText("Confirm Request");
-        confirmButton.setFont(confirmButton.getFont().deriveFont(confirmButton.getFont().getStyle() | Font.BOLD, confirmButton.getFont().getSize() + 7f));
-        confirmButton.setForeground(new Color(51, 51, 51));
-        contentPane.add(confirmButton);
-        confirmButton.setBounds(210, 155, 275, 65);
-        confirmButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try {
-                    confirmButtonMouseClicked();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            }
-        });
         //---- backButton ----
         backButton.setText("Back");
         backButton.setForeground(new Color(51, 51, 51));
@@ -128,17 +87,10 @@ public class CancelScreen extends JFrame {
         }
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
-
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Ehud
     private JComboBox resNumComboBox;
     private JLabel reservatioLabel;
-    private JComboBox reasonComboBox;
-    private JLabel reasonLabel;
-    private JButton confirmButton;
     private JButton backButton;
     private JLabel backgroundLabel;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
+    private JLabel descriptionLabel;
 }

@@ -86,11 +86,12 @@ public class ReservationCreationScreen extends JFrame {
                 error=true;
             }
             if(error)
-                errorText="Your name is not valid";
+                errorText="Your name is not valid, please enter only letters";
         }
 
         return errorText;
     }
+
     private String GuestsAmountValidation(String chosenRooms) {
         int capacity=0;
         char[] validation=chosenRooms.toCharArray();
@@ -155,8 +156,7 @@ public class ReservationCreationScreen extends JFrame {
         }
     }
     private void initComponents() throws ParseException {
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Ehud
+
         continueToPaymentButton = new JButton();
         Headlinelabel = new JLabel();
         guestNamelabel = new JLabel();
@@ -235,6 +235,7 @@ public class ReservationCreationScreen extends JFrame {
         phoneTextField.setBounds(245, 155, 290, phoneTextField.getPreferredSize().height);
         contentPane.add(emailTextField);
         emailTextField.setBounds(245, 135, 290, 19);
+        emailTextField.setText("example@example.com");
         contentPane.add(NameTextField);
         NameTextField.setBounds(245, 115, 290, 19);
         guestPhonelabel.setOpaque(true);
@@ -369,11 +370,6 @@ public class ReservationCreationScreen extends JFrame {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
-
-    public void setContinueToPaymentButton(JButton continueToPaymentButton) {
-        this.continueToPaymentButton = continueToPaymentButton;
-    }
-
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - Ehud
     private JButton continueToPaymentButton;
@@ -402,5 +398,4 @@ public class ReservationCreationScreen extends JFrame {
     private String recepName;
     private  LocalDate checkIn;
     private  LocalDate checkOut;
-    private Hotel myHotel;
 }

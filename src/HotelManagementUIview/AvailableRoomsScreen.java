@@ -108,7 +108,7 @@ public class AvailableRoomsScreen extends JFrame {
         //======== this ========
         var contentPane = getContentPane();
         contentPane.setLayout(null);
-
+        setTitle("Available Rooms");
         //---- dateslabel ----
         dateslabel.setText("Dates:");
         dateslabel.setForeground(Color.white);
