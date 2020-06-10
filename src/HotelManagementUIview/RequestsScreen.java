@@ -6,12 +6,10 @@ package HotelManagementUIview;
 
 import HotelManagementController.ActManager;
 import HotelManagementController.Program;
-import HotelManagmentModel.Reservation;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
 import java.io.IOException;
 import javax.swing.*;
 
@@ -25,6 +23,11 @@ public class RequestsScreen extends JFrame {
     private void backButtonMouseClicked() {
         Program.baseScreen.setVisible(true);
         Program.actionScreen.dispose();
+    }
+    private void declineButtonMouseClicked() throws IOException {
+        ActManager.DeleteLineFromFile(requestsComboBox.getSelectedItem().toString(),"src\\Requests");
+        JOptionPane.showMessageDialog(null,"You declined request!",
+                "Notice", JOptionPane.WARNING_MESSAGE);
     }
 
     private void initComponents() throws IOException {
@@ -82,6 +85,16 @@ public class RequestsScreen extends JFrame {
         declineButton.setForeground(new Color(200, 0, 0));
         contentPane.add(declineButton);
         declineButton.setBounds(455, 310, 165, 55);
+        declineButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    declineButtonMouseClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
 
         //---- backgroundLabel ----
         backgroundLabel.setText("text");

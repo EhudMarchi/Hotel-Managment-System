@@ -37,7 +37,7 @@ public class ChangeScreen extends JFrame {
         reservatioLabel = new JLabel();
         String[] reasonsStrings = { "Illness", "Unsatisfied", "Satisfied", "Bad Weather", "Other" };
         reasonComboBox = new JComboBox(reasonsStrings);
-        String[] propertyStrings = { "CheckIn Date", "CheckOut Date", "Rooms Description", "Guests Amount" };
+        String[] propertyStrings = { "CheckIn Date", "CheckOut Date", "CheckIn+CheckOut Date", "Rooms Description", "Guests Amount" };
         propertyComboBox = new JComboBox(propertyStrings);
         reasonLabel = new JLabel();
         confirmButton = new JButton();

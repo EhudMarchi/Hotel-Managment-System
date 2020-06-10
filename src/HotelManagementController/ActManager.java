@@ -20,11 +20,14 @@ import java.util.Scanner;
 public class ActManager {
     public static int calculatePriceOffer(LocalDate checkIn, LocalDate checkOut, JLabel roomsLabel) {
         int price=0;
-        int days=checkOut.compareTo(checkIn);
-        int years=checkOut.minusYears(checkIn.getYear()).getYear();
-        int months=checkOut.getMonthValue()-checkIn.getMonthValue();
-        days+=(months*30)+(years*365);
-        if(days<=30) {
+        int days=0;
+        if(checkIn.getYear()==checkOut.getYear()) {
+            days = checkOut.getDayOfYear() - checkIn.getDayOfYear();
+        }
+        else
+        {
+            days= checkOut.getDayOfYear()+365*(checkOut.getYear()- checkIn.getYear())- checkIn.getDayOfYear();;
+        }
             char[] validation = roomsLabel.getText().toCharArray();
             for (int i = 0; i < validation.length - 4; i++) {
                 if (Character.isDigit(validation[i])) {
@@ -47,11 +50,6 @@ public class ActManager {
                     }
                 }
             }
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Cannot order more than 30 straight days in our hotel",
-                    "Notice", JOptionPane.WARNING_MESSAGE);
-        }
         return price*days;
     }
 
@@ -137,7 +135,8 @@ public class ActManager {
     }
     public static String createReservationLine(String gName,String gEmail,String gPhone,String gAmount,String gRooms,LocalDate checkIn,LocalDate checkOut,String receptionistName) {
         String details="";
-        details="Guest Name: "+gName+"Guest Email: "+gEmail+" Guest Phone Number: "+gPhone+" Guests Amount: "+gAmount+" Guest Rooms: "+gRooms+" Check In Date: "+checkIn.toString()+" Check out Date: "+checkOut.toString()+" Receptionist Name: "+receptionistName;
+//        details=" Guest Name: "+gName+"Guest Email: "+gEmail+" Guest Phone Number: "+gPhone+" Guests Amount: "+gAmount+" Guest Rooms: "+gRooms+" Check In Date: "+checkIn.toString()+" Check out Date: "+checkOut.toString()+" Receptionist Name: "+receptionistName;
+        details="<br> Guest Name: "+gName+"<br>Guest Email: "+gEmail+"<br>"+"Guest Phone Number: "+gPhone+"<br>Guests Amount: "+gAmount+"<br>Guest Rooms: "+gRooms+"<br>Check In Date: "+checkIn.getDayOfMonth()+"/"+checkIn.getMonthValue()+"/"+checkIn.getYear()+"<br>Check Out Date: "+checkOut.getDayOfMonth()+"/"+checkOut.getMonthValue()+"/"+checkOut.getYear()+"<br>Receptionist Name: "+receptionistName+"<html>";
         return details;
     }
     public static String createReservationDetails(String gName,String gEmail,String gPhone,String gAmount,String gRooms,LocalDate checkIn,LocalDate checkOut,String receptionistName) {
@@ -148,7 +147,20 @@ public class ActManager {
     public static Guest getGuestInfo(String guestEmail) {
         return new Guest();
     }
-
+public static String[] getUsers(boolean asManager)
+{
+    List<String> lines = new ArrayList<String>();
+    if (asManager) {
+        lines = readLinesFromFile("src\\ManagerLoginData");
+    } else {
+        lines = readLinesFromFile("src\\ReceptionistLoginData");
+    }
+    String[] users = new String[lines.size()/3];
+    for (int i = 0,j=0; i < lines.size(); i += 3,j++) {
+        users[j]=lines.get(i+2)+" User Name:"+lines.get(i)+" Password:"+lines.get(i+1);
+    }
+    return users;
+}
     public static String login(String userName, String password, boolean asManager) throws IOException {
         List<String> lines = new ArrayList<String>();
         if (asManager) {
@@ -175,15 +187,62 @@ public class ActManager {
         }
         return requestsItems;
     }
+    public static void addNewEmployee(boolean isManager,String name,String userName,String password) throws IOException {
+        List<String> lines = new ArrayList<String>();
+        String pathName="src\\ReceptionistLoginData";;
+        lines.set(0,userName);
+        lines.set(1,password);
+        lines.set(2,name);
+        if(isManager)
+            pathName="src\\ManagerLoginData";
+        FileWriter myWriter = new FileWriter(pathName,true);
+        for (int i = 0; i < lines.size(); i ++)
+        {
+            myWriter.write(lines.get(i)+"\n");
+        }
+        myWriter.close();
+    }
+    public static String ReadReservationLineFromFile(String reservationNumber, String pathName) throws IOException {
+        List<String> lines = new ArrayList<String>();
+        String details="";
+        lines = readLinesFromFile(pathName);
+        for (int i = 0; i < lines.size(); i ++) {
+            if (lines.get(i).startsWith(reservationNumber)) {
+                details += lines.get(i);
+            }
+        }
+
+        return details;
+    }
+    public static void DeleteLineFromFile(String reservationNumber, String pathName) throws IOException {
+        List<String> lines = new ArrayList<String>();
+        lines = readLinesFromFile(pathName);
+        File file =new File(pathName);
+        file.delete();
+        FileWriter myWriter = new FileWriter(pathName,true);
+        for (int i = 0; i < lines.size(); i ++)
+        {
+            if(lines.get(i).startsWith(reservationNumber))
+            {
+                lines.remove(i);
+                i--;
+            }
+            else
+            {
+                myWriter.write(lines.get(i)+"\n");
+            }
+        }
+        myWriter.close();
+    }
 
     public static void AddCancelRequest(String reservationNumber,String cancelReason) throws IOException {
         FileWriter myWriter = new FileWriter("src\\Requests",true);
-        myWriter.write("\n"+ reservationNumber+"- Cancel Reason: "+cancelReason);
+        myWriter.write(reservationNumber+"- Cancel Reason: "+cancelReason+"\n");
         myWriter.close();
     }
     public static void AddChangeRequest(String reservationNumber,String change,String cancelReason) throws IOException {
         FileWriter myWriter = new FileWriter("src\\Requests",true);
-        myWriter.write("\n"+ reservationNumber+"- Change wanted:" + change+", Change Reason: "+cancelReason);
+        myWriter.write(reservationNumber+"- Change wanted:" + change+", Change Reason: "+cancelReason+"\n");
         myWriter.close();
     }
     public static String[] ReadReservationsNumber(JComboBox reservations) throws IOException {
@@ -222,13 +281,6 @@ public static void RefreshDate(LocalDate date, JSpinner Day,JSpinner Month,JSpin
     Month.setValue(date.getMonthValue());
     Year.setValue(date.getYear());
 }
-    public static boolean specialAct() {
-        return false;
-    }
-
-    public static Reservation getReservationInfo(String reservationNumber) throws IOException {
-        return new Reservation();
-    }
     public static boolean CreditCardValidation(String cardNumber) {
         boolean isValid=true;
         if(cardNumber.length()!=16)

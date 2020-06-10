@@ -5,6 +5,8 @@ import HotelManagementController.Program;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -17,6 +19,9 @@ public class ViewReservationDetailsScreen extends JFrame {
     private void backButtonMouseClicked() {
         Program.baseScreen.setEnabled(true);
         Program.actionScreen.dispose();
+    }
+    private void resNumComboBoxactionPerformed() throws IOException {
+        descriptionLabel.setText("<html>"+ActManager.ReadReservationLineFromFile(resNumComboBox.getSelectedItem().toString(),"src\\ReservationsData"));
     }
     private void initComponents() throws IOException {
         resNumComboBox = new JComboBox(ActManager.ReadReservationsNumber(resNumComboBox));
@@ -37,7 +42,16 @@ public class ViewReservationDetailsScreen extends JFrame {
         resNumComboBox.setFont(resNumComboBox.getFont().deriveFont(resNumComboBox.getFont().getStyle() | Font.BOLD));
         contentPane.add(resNumComboBox);
         resNumComboBox.setBounds(70, 120, 145, resNumComboBox.getPreferredSize().height);
-
+        resNumComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    resNumComboBoxactionPerformed();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
         //---- reservatioLabel ----
         reservatioLabel.setText("Reservation Number:");
         reservatioLabel.setHorizontalAlignment(SwingConstants.CENTER);

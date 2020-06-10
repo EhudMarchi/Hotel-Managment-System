@@ -25,6 +25,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         if(managerMode) {
             modeLabel.setText("Manager");
             requestsButton.setEnabled(true);
+            managerOptionsButton.setEnabled(true);
         }
     }
     private void requestsButtonMouseClicked() throws IOException {
@@ -55,6 +56,15 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         Program.actionScreen=new ChangeScreen();
         Program.actionScreen.setVisible(true);
     }
+    private void managerOptionsMouseClicked() throws IOException {
+        if(managerMode)
+        {
+            this.setVisible(false);
+            Program.actionScreen=new ManagerOptionsScreen();
+            Program.actionScreen.setVisible(true);
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - Ehud
@@ -67,6 +77,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         requestsButton = new JButton();
         label1 = new JLabel();
         backgroundLabel = new JLabel();
+        managerOptionsButton =new JButton();
 
         //======== this ========
         setResizable(false);
@@ -144,7 +155,23 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         });
         contentPane.add(logoutButton);
         logoutButton.setBounds(650, 385, 115, 45);
+        //---- managerOptionsButton ----
+        managerOptionsButton.setText("Manager Options");
+        managerOptionsButton.setFont(managerOptionsButton.getFont().deriveFont(managerOptionsButton.getFont().getStyle(),10));
 
+        managerOptionsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    managerOptionsMouseClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
+        contentPane.add(managerOptionsButton);
+        managerOptionsButton.setBounds(30, 385, 125, 45);
+        managerOptionsButton.setEnabled(false);
         //---- modeLabel ----
         modeLabel.setText("Receptionist");
         modeLabel.setForeground(Color.blue);
@@ -198,6 +225,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
+
     private void createReservationButtonMouseClicked() throws IOException, ParseException {
 //        Reservation currentReservation = new Reservation();
 
@@ -215,6 +243,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
     private JButton logoutButton;
     private JLabel modeLabel;
     private JButton requestsButton;
+    private JButton managerOptionsButton;
     private JLabel label1;
     private JLabel backgroundLabel;
     private String recepName;

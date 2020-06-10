@@ -5,6 +5,7 @@ import HotelManagementController.ActManager;
 import HotelManagementController.Program;
 import HotelManagmentModel.Hotel;
 import HotelManagmentModel.Reservation;
+import org.junit.platform.commons.util.StringUtils;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -12,6 +13,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
+
 
 /**
  * @author Ehud
@@ -71,7 +73,9 @@ public class ReservationCreationScreen extends JFrame {
     private boolean DateValidation(LocalDate checkin,LocalDate checkout)
     {
         if(checkin.isEqual(checkout)||checkin.isAfter(checkout))
+        {
             return false;
+        }
         return true;
     }
     private String NameValidation(String Name)
@@ -79,17 +83,36 @@ public class ReservationCreationScreen extends JFrame {
         char[] validation=Name.toCharArray();
         boolean error=false;
         String errorText="";
-        for(int i=0;i<Name.length();i++)
+        if(Name.length()==0)
         {
-            if (!Character.isLetter(validation[i]))
-            {
-                error=true;
+            error=true;
+        }
+            for (int i = 0; i < Name.length(); i++) {
+                if (!Character.isLetter(validation[i])) {
+                    error = true;
+                }
             }
-            if(error)
-                errorText="Your name is not valid, please enter only letters";
+        if (error)
+            errorText = "Your name is not valid, please enter only letters";
+        return errorText;
+    }
+    private boolean phoneValidation(String phone) {
+        boolean isValid=true;
+        if((phone.length()!=11)||(phone.contains("_")))
+        {
+            isValid=false;
         }
 
-        return errorText;
+        return  isValid;
+    }
+    private boolean emailValidation(String email) {
+        boolean isValid=true;
+        if((email.startsWith("@"))||(email.endsWith("@"))||(!email.matches("(.*)@(.*)")))
+        {
+            isValid=false;
+        }
+
+        return  isValid;
     }
 
     private String GuestsAmountValidation(String chosenRooms) {
@@ -142,6 +165,21 @@ public class ReservationCreationScreen extends JFrame {
             }
             if (GuestsAmountValidation(roomsLabel.getText()) != "") {
                 JOptionPane.showMessageDialog(null, GuestsAmountValidation(guestsAmountSpinner.getValue().toString()),
+                        "Notice", JOptionPane.WARNING_MESSAGE);
+                valid=false;
+            }
+            if (!DateValidation(checkIn,checkOut)) {
+                JOptionPane.showMessageDialog(null, "Invalid Dates",
+                        "Notice", JOptionPane.WARNING_MESSAGE);
+                valid=false;
+            }
+            if (!phoneValidation(phoneTextField.getText())) {
+                JOptionPane.showMessageDialog(null, "Invalid Phone Number",
+                        "Notice", JOptionPane.WARNING_MESSAGE);
+                valid=false;
+            }
+            if (!emailValidation(emailTextField.getText())) {
+                JOptionPane.showMessageDialog(null, "Invalid Email",
                         "Notice", JOptionPane.WARNING_MESSAGE);
                 valid=false;
             }
