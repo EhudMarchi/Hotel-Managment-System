@@ -1,6 +1,3 @@
-/*
- * Created by JFormDesigner on Mon Jun 08 19:00:26 IDT 2020
- */
 
 package HotelManagementUIview;
 
@@ -128,11 +125,8 @@ public class CancelScreen extends JFrame {
         }
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Ehud
     private JComboBox resNumComboBox;
     private JLabel reservatioLabel;
     private JComboBox reasonComboBox;
@@ -140,5 +134,5 @@ public class CancelScreen extends JFrame {
     private JButton confirmButton;
     private JButton backButton;
     private JLabel backgroundLabel;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
+
 }

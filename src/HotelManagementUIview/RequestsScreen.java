@@ -1,7 +1,3 @@
-/*
- * Created by JFormDesigner on Sun Jun 07 11:48:09 IDT 2020
- */
-
 package HotelManagementUIview;
 
 import HotelManagementController.ActManager;
@@ -25,14 +21,12 @@ public class RequestsScreen extends JFrame {
         Program.actionScreen.dispose();
     }
     private void declineButtonMouseClicked() throws IOException {
-        ActManager.DeleteLineFromFile(requestsComboBox.getSelectedItem().toString(),"src\\Requests");
+        ActManager.deleteLineFromFile(requestsComboBox.getSelectedItem().toString(),"src\\Requests");
         JOptionPane.showMessageDialog(null,"You declined request!",
                 "Notice", JOptionPane.WARNING_MESSAGE);
     }
 
     private void initComponents() throws IOException {
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Ehud
         requestsComboBox = new JComboBox(ActManager.ReadRequests(requestsComboBox));
         requestsLabel = new JLabel();
         backButton = new JButton();
@@ -118,16 +112,11 @@ public class RequestsScreen extends JFrame {
         }
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
-
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Ehud
     private JComboBox requestsComboBox;
     private JLabel requestsLabel;
     private JButton backButton;
     private JButton confirmButton;
     private JButton declineButton;
     private JLabel backgroundLabel;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

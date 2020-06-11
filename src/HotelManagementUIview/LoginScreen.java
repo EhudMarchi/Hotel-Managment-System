@@ -1,8 +1,6 @@
 package HotelManagementUIview;
 import HotelManagementController.ActManager;
 import HotelManagementController.Program;
-import HotelManagmentModel.Hotel;
-
 import javax.swing.JOptionPane;
 import java.awt.event.*;
 import javax.swing.*;
@@ -15,15 +13,9 @@ public class LoginScreen extends JFrame {
     private JLabel userNameLabel;
     private JLabel passwordLabel;
     private JTextField userNameTextField;
-
-    public JButton getLoginButton() {
-        return loginButton;
-    }
     private void exitButtonMouseClicked() {
         System.exit(0);
     }
-
-
     private JButton loginButton;
     private JPasswordField passwordTextField;
     private JCheckBox managerCheckBox;

@@ -70,9 +70,6 @@ public class AvailableRoomsScreen extends JFrame {
         }
         r.setText(text);
     }
-    public AvailableRoomsScreen() {
-    }
-
     private void backButtonMouseClicked() {
         Program.actionScreen.setVisible(true);
         Program.roomsScreen.dispose();
@@ -88,8 +85,6 @@ public class AvailableRoomsScreen extends JFrame {
     }
 
     private void initComponents() {
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Ehud
         dateslabel = new JLabel();
         twinLabel = new JLabel();
         familyLabel = new JLabel();
@@ -220,11 +215,9 @@ public class AvailableRoomsScreen extends JFrame {
         }
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Ehud
+
     private JLabel dateslabel;
     private JLabel twinLabel;
     private JLabel familyLabel;
@@ -239,5 +232,4 @@ public class AvailableRoomsScreen extends JFrame {
     private JButton backButton;
     private JButton selectButton;
     private JLabel backgroundLabel;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

@@ -1,6 +1,3 @@
-/*
- * Created by JFormDesigner on Mon Jun 08 19:00:26 IDT 2020
- */
 
 package HotelManagementUIview;
 
@@ -31,8 +28,7 @@ public class ChangeScreen extends JFrame {
                 "Notice", JOptionPane.WARNING_MESSAGE);
     }
     private void initComponents() throws IOException {
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Ehud
+
         resNumComboBox = new JComboBox(ActManager.ReadReservationsNumber(resNumComboBox));
         reservatioLabel = new JLabel();
         String[] reasonsStrings = { "Illness", "Unsatisfied", "Satisfied", "Bad Weather", "Other" };
@@ -139,11 +135,8 @@ public class ChangeScreen extends JFrame {
         }
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Ehud
     private JComboBox resNumComboBox;
     private JLabel reservatioLabel;
     private JComboBox reasonComboBox;
@@ -152,5 +145,4 @@ public class ChangeScreen extends JFrame {
     private JButton confirmButton;
     private JButton backButton;
     private JLabel backgroundLabel;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

@@ -3,9 +3,6 @@ package HotelManagementUIview;
 
 import HotelManagementController.ActManager;
 import HotelManagementController.Program;
-import HotelManagmentModel.Hotel;
-import HotelManagmentModel.Reservation;
-import org.junit.platform.commons.util.StringUtils;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -70,7 +67,7 @@ public class ReservationCreationScreen extends JFrame {
             priceLabel.setText("Price: "+ActManager.calculatePriceOffer(checkIn,checkOut,roomsLabel)+"₪");
         }
     }
-    private boolean DateValidation(LocalDate checkin,LocalDate checkout)
+    protected boolean DateValidation(LocalDate checkin,LocalDate checkout)
     {
         if(checkin.isEqual(checkout)||checkin.isAfter(checkout))
         {
@@ -78,7 +75,7 @@ public class ReservationCreationScreen extends JFrame {
         }
         return true;
     }
-    private String NameValidation(String Name)
+    public String nameValidation(String Name)
     {
         char[] validation=Name.toCharArray();
         boolean error=false;
@@ -96,26 +93,41 @@ public class ReservationCreationScreen extends JFrame {
             errorText = "Your name is not valid, please enter only letters";
         return errorText;
     }
-    private boolean phoneValidation(String phone) {
+    public boolean phoneValidation(String phone) {
         boolean isValid=true;
+        char[] validation=phone.toCharArray();
         if((phone.length()!=11)||(phone.contains("_")))
         {
             isValid=false;
         }
+        if(phone.length()>3)
+        {
+        if(validation[3]!='-')
+            isValid = false;
+        else {
+            for (int i = 0; i < phone.length(); i++) {
+                if (!Character.isDigit(validation[i]) && (i != 3)) {
+                    isValid = false;
+                    break;
+                }
+            }
+        }
+        }
+        else
+            isValid=false;
 
         return  isValid;
     }
-    private boolean emailValidation(String email) {
+    public boolean emailValidation(String email) {
         boolean isValid=true;
-        if((email.startsWith("@"))||(email.endsWith("@"))||(!email.matches("(.*)@(.*)")))
+        if((ActManager.countOccurences(email,'.')<1)||(ActManager.countOccurences(email,'@')!=1)||(email.startsWith("@"))||(email.endsWith("@"))||(email.endsWith("."))||(email.startsWith(".")))
         {
             isValid=false;
         }
-
         return  isValid;
     }
 
-    private String GuestsAmountValidation(String chosenRooms) {
+    protected String guestsAmountValidation(String chosenRooms) {
         int capacity=0;
         char[] validation=chosenRooms.toCharArray();
         String errorText="";
@@ -158,13 +170,13 @@ public class ReservationCreationScreen extends JFrame {
     private void continueToPaymentButtonMouseClicked() {
         if(continueToPaymentButton.isEnabled()) {
             boolean valid=true;
-            if ((NameValidation(NameTextField.getText()) != "")) {
-                JOptionPane.showMessageDialog(null, NameValidation(NameTextField.toString()),
+            if ((nameValidation(NameTextField.getText()) != "")) {
+                JOptionPane.showMessageDialog(null, nameValidation(NameTextField.toString()),
                         "Notice", JOptionPane.WARNING_MESSAGE);
                 valid=false;
             }
-            if (GuestsAmountValidation(roomsLabel.getText()) != "") {
-                JOptionPane.showMessageDialog(null, GuestsAmountValidation(guestsAmountSpinner.getValue().toString()),
+            if (guestsAmountValidation(roomsLabel.getText()) != "") {
+                JOptionPane.showMessageDialog(null, guestsAmountValidation(guestsAmountSpinner.getValue().toString()),
                         "Notice", JOptionPane.WARNING_MESSAGE);
                 valid=false;
             }
@@ -405,11 +417,7 @@ public class ReservationCreationScreen extends JFrame {
         }
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
-
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Ehud
     private JButton continueToPaymentButton;
     private JLabel Headlinelabel;
     private JLabel guestNamelabel;

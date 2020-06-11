@@ -1,7 +1,3 @@
-/*
- * Created by JFormDesigner on Sun Jun 07 11:48:09 IDT 2020
- */
-
 package HotelManagementUIview;
 
 import HotelManagementController.ActManager;
@@ -31,10 +27,39 @@ public class ManagerOptionsScreen extends JFrame {
         Program.baseScreen.setVisible(true);
         Program.actionScreen.dispose();
     }
-    private void confirmButtonMouseClicked() {
+    private void confirmButtonMouseClicked() throws IOException {
         if(optionsComboBox.getSelectedItem().toString().contains("Add Receptionist"))
         {
-//            ActManager.addNewEmployee();
+           ActManager.addNewEmployee(false,NameTextField.getText(),userNameTextField.getText(),passwordTextField.getText());
+           JOptionPane.showMessageDialog(null, "New receptionist has been added", "Notice", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (optionsComboBox.getSelectedItem().toString().contains("Add Manager"))
+        {
+            ActManager.addNewEmployee(true,NameTextField.getText(),userNameTextField.getText(),passwordTextField.getText());
+            JOptionPane.showMessageDialog(null, "New manager has been added", "Notice", JOptionPane.WARNING_MESSAGE);
+        }
+        else if(optionsComboBox.getSelectedItem().toString().contains("Remove Receptionist")) {
+            ActManager.deleteUserFromFile(ActManager.getUserNameSubString(recepComboBox.getSelectedItem().toString()),false);
+            JOptionPane.showMessageDialog(null, "Receptionist has been removed", "Notice", JOptionPane.WARNING_MESSAGE);
+        }
+        else if(optionsComboBox.getSelectedItem().toString().contains("Remove Manager")) {
+            ActManager.deleteUserFromFile(ActManager.getUserNameSubString(managerComboBox.getSelectedItem().toString()),true);
+            JOptionPane.showMessageDialog(null, "Manager has been removed", "Notice", JOptionPane.WARNING_MESSAGE);
+        }
+        else if(optionsComboBox.getSelectedItem().toString().contains("Add Rooms"))
+        {
+            int roomsAmount=(Integer) roomsSpinner.getValue();
+            String roomType=roomTypeComboBox.getSelectedItem().toString();
+            ActManager.changeRoomsAmount(roomType, roomsAmount);
+            JOptionPane.showMessageDialog(null, roomsAmount+" "+roomType+" rooms has been added", "Notice", JOptionPane.WARNING_MESSAGE);
+        }
+        else if(optionsComboBox.getSelectedItem().toString().contains("Remove Rooms"))
+        {
+            int roomsAmount=((Integer) roomsSpinner.getValue())*(-1);
+            String roomType=roomTypeComboBox.getSelectedItem().toString();
+            ActManager.changeRoomsAmount(roomType, roomsAmount);
+            roomsAmount*=(-1);
+            JOptionPane.showMessageDialog(null, roomsAmount+" "+roomType+" rooms has been removed", "Notice", JOptionPane.WARNING_MESSAGE);
         }
     }
     private void optionsComboBoxactionPerformed() throws IOException {
@@ -152,14 +177,11 @@ public class ManagerOptionsScreen extends JFrame {
         optionsComboBox.setFont(optionsComboBox.getFont().deriveFont(optionsComboBox.getFont().getStyle() | Font.BOLD));
         contentPane.add(optionsComboBox);
         optionsComboBox.setBounds(180, 140, 480, 30);
-        optionsComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    optionsComboBoxactionPerformed();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+        optionsComboBox.addActionListener(e -> {
+            try {
+                optionsComboBoxactionPerformed();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
         });
         //---- roomTypeComboBox ----
@@ -233,7 +255,11 @@ public class ManagerOptionsScreen extends JFrame {
         confirmButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                confirmButtonMouseClicked();
+                try {
+                    confirmButtonMouseClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
         //---- receptionistNameLabel ----
@@ -308,7 +334,6 @@ public class ManagerOptionsScreen extends JFrame {
         }
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     private JComboBox optionsComboBox;

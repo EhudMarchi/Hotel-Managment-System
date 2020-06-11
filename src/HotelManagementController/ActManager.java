@@ -70,13 +70,17 @@ public class ActManager {
         e.printStackTrace();
         }
     }
-
-
-//    public static int showAvailableRooms(LocalDate checkIn, LocalDate checkOut) {
-//        return 0;
-//    }
-
-
+    public static int countOccurences(String someString, char searchedChar) {
+        int count=0;
+        for(int i=0;i<someString.length();i++)
+        {
+         if(someString.charAt(i)==searchedChar)
+            {
+             count++;
+            }
+        }
+        return count;
+    }
     public static Reservation createReservation(int reservationNumber,String details,LocalDate checkIn,LocalDate checkOut,JLabel rooms) throws IOException {
         Reservation newRes=new Reservation();
         int[] orderedRooms={0,0,0,0,0};
@@ -190,9 +194,9 @@ public static String[] getUsers(boolean asManager)
     public static void addNewEmployee(boolean isManager,String name,String userName,String password) throws IOException {
         List<String> lines = new ArrayList<String>();
         String pathName="src\\ReceptionistLoginData";;
-        lines.set(0,userName);
-        lines.set(1,password);
-        lines.set(2,name);
+        lines.add(userName);
+        lines.add(password);
+        lines.add(name);
         if(isManager)
             pathName="src\\ManagerLoginData";
         FileWriter myWriter = new FileWriter(pathName,true);
@@ -214,7 +218,7 @@ public static String[] getUsers(boolean asManager)
 
         return details;
     }
-    public static void DeleteLineFromFile(String reservationNumber, String pathName) throws IOException {
+    public static void deleteLineFromFile(String reservationNumber, String pathName) throws IOException {
         List<String> lines = new ArrayList<String>();
         lines = readLinesFromFile(pathName);
         File file =new File(pathName);
@@ -234,7 +238,91 @@ public static String[] getUsers(boolean asManager)
         }
         myWriter.close();
     }
+    public static String getUserNameSubString(String userString)
+    {
+        char[] validation=userString.toCharArray();
+        String userName="";
+        for(int i=0;i<userString.length();i++)
+        {
+            if(validation[i]==':')
+            {
+                for(int j=i+1;j<userString.length();j++) {
+                    if (validation[j] != ' ')
+                        userName += validation[j];
+                    else
+                        return userName;
+                }
+            }
+            }
+        return userName;
+        }
+    public static void deleteUserFromFile(String username, boolean isManager) throws IOException {
+        List<String> lines = new ArrayList<String>();
+        String pathName = "src\\ReceptionistLoginData" ;
+        if (isManager)
+            pathName = "src\\ManagerLoginData" ;
+        lines = readLinesFromFile(pathName);
+        File file = new File(pathName);
+        file.delete();
+        FileWriter myWriter = new FileWriter(pathName, true);
+        for (int i = 0; i < lines.size(); i++)
+        {
+            if (!lines.get(i).startsWith(username))
+                {
+                    myWriter.write(lines.get(i) + "\n");
+                }
+                else
+                {
+                    i+=2;
+                }
+        }
+        myWriter.close();
+    }
+public static void changeRoomsAmount(String roomType, int amount) throws IOException {
+    List<String> lines = new ArrayList<String>();
+    String pathName="src\\HotelData";
+    lines=readLinesFromFile(pathName);
+    File file =new File(pathName);
+    file.delete();
+int value=0;
+    if(roomType=="Twin")
+    {
+        value=Integer.parseInt(lines.get(0));
+        value+=amount;
+        lines.set(0,String.valueOf(value));
+    }
+    if(roomType=="Family")
+    {
+        value=Integer.parseInt(lines.get(1));
+        value+=amount;
+        lines.set(1,String.valueOf(value));
+    }
+    if(roomType=="Deluxe")
+    {
+        value=Integer.parseInt(lines.get(2));
+        value+=amount;
+        lines.set(2,String.valueOf(value));
+    }
+    if(roomType=="Premium")
+    {
+        value=Integer.parseInt(lines.get(3));
+        value+=amount;
+        lines.set(3,String.valueOf(value));
+    }
+    if(roomType=="Suite")
+    {
+        value=Integer.parseInt(lines.get(4));
+        value+=amount;
+        lines.set(4,String.valueOf(value));
+    }
+    FileWriter myWriter = new FileWriter(pathName,true);
+    for (int i = 0; i < lines.size(); i ++)
+    {
+        myWriter.write(lines.get(i)+"\n");
+    }
+    myWriter.close();
 
+}
     public static void AddCancelRequest(String reservationNumber,String cancelReason) throws IOException {
         FileWriter myWriter = new FileWriter("src\\Requests",true);
         myWriter.write(reservationNumber+"- Cancel Reason: "+cancelReason+"\n");
@@ -262,7 +350,7 @@ public static String[] getUsers(boolean asManager)
         }
         return reservationsNumbers;
     }
-public static void ChangeLastResNumber(int lastRes) throws IOException {
+    public static void ChangeLastResNumber(int lastRes) throws IOException {
     List<String> lines = new ArrayList<String>();
     lines = readLinesFromFile("src\\HotelData");
     File file =new File("src\\HotelData");
@@ -275,20 +363,13 @@ public static void ChangeLastResNumber(int lastRes) throws IOException {
     myWriter.write(Integer.toString(lastRes));
     myWriter.close();
 }
-public static void RefreshDate(LocalDate date, JSpinner Day,JSpinner Month,JSpinner Year)
+    public static void RefreshDate(LocalDate date, JSpinner Day,JSpinner Month,JSpinner Year)
 {
     Day.setValue(date.getDayOfMonth());
     Month.setValue(date.getMonthValue());
     Year.setValue(date.getYear());
 }
-    public static boolean CreditCardValidation(String cardNumber) {
-        boolean isValid=true;
-        if(cardNumber.length()!=16)
-        {
-            isValid = false;
-        }
-        return isValid;
-    }
+
     public static List<String> readLinesFromFile(String fileName) {
         List<String> lines = new ArrayList<String>();
         try {

@@ -1,10 +1,7 @@
 
 package HotelManagementUIview;
-
 import java.awt.event.*;
-
 import HotelManagementController.Program;
-
 import java.awt.*;
 import java.io.IOException;
 import java.text.ParseException;
@@ -14,11 +11,24 @@ import javax.swing.*;
  * @author Ehud
  */
 public class MainScreen extends JFrame {//Singelton Design Pettern
-    public MainScreen() {
-        initComponents();
+    private static MainScreen single_instance=null;
+    public static MainScreen MainScreen(String name,boolean isManager) {
+        if (single_instance == null)
+        {
+            single_instance = new MainScreen(name,isManager);
+        }
+        return single_instance;
     }
-    public MainScreen(String name,boolean isManager)
+    @Override
+    public void dispose()
     {
+        super.dispose();
+        System.out.println("The only main screen has been deleted");
+    }
+
+    MainScreen(String name, boolean isManager)
+    {
+
         initComponents();
         recepName = name;
         managerMode=isManager;
@@ -27,6 +37,12 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
             requestsButton.setEnabled(true);
             managerOptionsButton.setEnabled(true);
         }
+        System.out.println("A single main screen has been created");
+    }
+    private void createReservationButtonMouseClicked() throws IOException, ParseException {
+        Program.actionScreen=new ReservationCreationScreen(recepName);
+        Program.actionScreen.setVisible(true);
+        Program.baseScreen.setVisible(false);
     }
     private void requestsButtonMouseClicked() throws IOException {
         if(managerMode)
@@ -66,8 +82,6 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
     }
 
     private void initComponents() {
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Ehud
         createReservationButton = new JButton();
         changeReservationButton = new JButton();
         cancelReservationButton = new JButton();
@@ -223,19 +237,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         }
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
-
-    private void createReservationButtonMouseClicked() throws IOException, ParseException {
-//        Reservation currentReservation = new Reservation();
-
-        Program.actionScreen=new ReservationCreationScreen(recepName);
-        Program.actionScreen.setVisible(true);
-        Program.baseScreen.setVisible(false);
-//        this.dispose();
-    }
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Ehud
     private JButton createReservationButton;
     private JButton changeReservationButton;
     private JButton cancelReservationButton;
@@ -248,5 +250,5 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
     private JLabel backgroundLabel;
     private String recepName;
     private boolean managerMode;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
+
 }

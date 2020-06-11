@@ -3,8 +3,6 @@ package HotelManagementUIview;
 import HotelManagementController.ActManager;
 import HotelManagementController.Program;
 import HotelManagmentModel.Hotel;
-import HotelManagmentModel.Reservation;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -24,8 +22,30 @@ public class PaymentScreen extends JFrame {
         descriptionLabel.setText(reservationDetails);
         priceLabel.setText(price);
     }
+    public PaymentScreen()
+    {
+        initComponents();
+    }
+    public static boolean creditCardValidation(String cardNumber) {
+        boolean isValid=true;
+        char[] validation=cardNumber.toCharArray();
+        if(cardNumber.length()!=16)
+        {
+            isValid = false;
+        }
+        else
+        {
+            for (int i = 0; i < cardNumber.length(); i++) {
+                if (!Character.isDigit(validation[i])) {
+                    isValid = false;
+                    break;
+                }
+            }
+        }
+        return isValid;
+    }
     private void confirmButtonMouseClicked() throws IOException {
-        if(ActManager.CreditCardValidation(CreditNumber.getText()))
+        if(creditCardValidation(CreditNumber.getText()))
         {
             ActManager.createReservation(Hotel.numOfReservations,dLine,checkin,checkout,roomsDescription);
             this.dispose();
@@ -47,8 +67,6 @@ public class PaymentScreen extends JFrame {
     }
 
     private void initComponents() {
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Ehud
         CreditNumber = new JTextField();
         descriptionLabel = new JLabel();
         creditCardLabel = new JLabel();
@@ -138,11 +156,7 @@ public class PaymentScreen extends JFrame {
         }
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
-
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - Ehud
     private JTextField CreditNumber;
     private JLabel descriptionLabel;
     private JLabel creditCardLabel;
@@ -154,5 +168,4 @@ public class PaymentScreen extends JFrame {
     private LocalDate checkin;
     private LocalDate checkout;
     private JLabel roomsDescription;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
