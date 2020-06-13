@@ -22,6 +22,7 @@ public class LoginScreen extends JFrame {
     private JLabel loginLabel;
 
     public LoginScreen() {
+        this.setDefaultCloseOperation(0);
         userNameLabel = new JLabel();
         passwordLabel = new JLabel();
         userNameTextField = new JTextField();
@@ -117,8 +118,8 @@ public class LoginScreen extends JFrame {
                     "Notice",
                     JOptionPane.WARNING_MESSAGE);
         } else {
-            Program.baseScreen = new MainScreen(name, managerCheckBox.isSelected());
-            Program.baseScreen.setVisible(true);
+            ActManager.baseScreen = new MainScreen(name, managerCheckBox.isSelected());
+            ActManager.baseScreen.setVisible(true);
             this.dispose();
         }
     }

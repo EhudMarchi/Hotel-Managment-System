@@ -5,8 +5,6 @@ import HotelManagementController.Program;
 
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
@@ -20,7 +18,7 @@ public class AvailableRoomsScreen extends JFrame {
         initComponents();
         labelchanger=rooms;
 
-        List<String> availableRooms= ActManager.ShowAvailableRooms(checkIn,checkOut);
+        List<String> availableRooms= ActManager.showAvailableRooms(checkIn,checkOut);
         dateslabel.setText("Check In: "+(checkIn.plusYears(2000)).toString()+"      Check Out: "+ (checkOut.plusYears(2000)).toString());
         twinLabel.setText("Available Twin Rooms:" +availableRooms.get(0));
         familyLabel.setText("Available Family Rooms:"+availableRooms.get(1));
@@ -41,11 +39,11 @@ public class AvailableRoomsScreen extends JFrame {
 
     @Override
     public void dispose() {
-        ChangeRoomsDescription(labelchanger);
+        changeRoomsDescription(labelchanger);
         super.dispose();
     }
 
-    public void ChangeRoomsDescription(JLabel r)
+    public void changeRoomsDescription(JLabel r)
     {
         String text="";
         if(Integer.parseInt(twinSpinner.getValue().toString())!=0)
@@ -71,20 +69,22 @@ public class AvailableRoomsScreen extends JFrame {
         r.setText(text);
     }
     private void backButtonMouseClicked() {
-        Program.actionScreen.setVisible(true);
-        Program.roomsScreen.dispose();
+        ActManager.actionScreen.setVisible(true);
+        ActManager.roomsScreen.dispose();
     }
 
     public void selectButtonMouseClicked() throws ParseException {
-        if(Program.baseScreen.isVisible())
+        if(ActManager.baseScreen.isVisible())
         {
-            Program.baseScreen.setVisible(false);
+            ActManager.baseScreen.setVisible(false);
         }
-        Program.actionScreen.setVisible(true);
-        Program.roomsScreen.dispose();
+        ActManager.actionScreen.setVisible(true);
+        ActManager.roomsScreen.dispose();
     }
 
     private void initComponents() {
+        this.setDefaultCloseOperation(0);
+        this.setResizable(false);
         dateslabel = new JLabel();
         twinLabel = new JLabel();
         familyLabel = new JLabel();

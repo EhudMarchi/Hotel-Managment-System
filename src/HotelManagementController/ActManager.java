@@ -1,23 +1,29 @@
 package HotelManagementController;
 
-import HotelManagementUIview.AvailableRoomsScreen;
-import HotelManagmentModel.Guest;
-import HotelManagmentModel.Hotel;
-import HotelManagmentModel.Reservation;
+import HotelManagementUIview.LoginScreen;
+import HotelManagmentModel.*;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class ActManager {
+    public static JFrame baseScreen = new JFrame();
+    public static JFrame actionScreen;
+    public static JFrame roomsScreen;
+    public static JFrame paymentScreen;
+    public static void runHotelManagementSystem() throws IOException {
+        Hotel myHotel=new Hotel();
+        baseScreen = new LoginScreen();
+        baseScreen.setVisible(true);
+    }
     public static int calculatePriceOffer(LocalDate checkIn, LocalDate checkOut, JLabel roomsLabel) {
         int price=0;
         int days=0;
@@ -148,9 +154,6 @@ public class ActManager {
         details="<html>Guest Name: "+gName+"<br>Guest Email: "+gEmail+"<br>"+"Guest Phone Number: "+gPhone+"<br>Guests Amount: "+gAmount+"<br>Guest Rooms: "+gRooms+"<br>Check In Date: "+checkIn.getDayOfMonth()+"/"+checkIn.getMonthValue()+"/"+checkIn.getYear()+"<br>Check Out Date: "+checkOut.getDayOfMonth()+"/"+checkOut.getMonthValue()+"/"+checkOut.getYear()+"<br>Receptionist Name: "+receptionistName+"<html>";
         return details;
     }
-    public static Guest getGuestInfo(String guestEmail) {
-        return new Guest();
-    }
 public static String[] getUsers(boolean asManager)
 {
     List<String> lines = new ArrayList<String>();
@@ -181,6 +184,38 @@ public static String[] getUsers(boolean asManager)
         }
         return "Not Valid";
     }
+    public static List<Receptionist> readReceptionists() throws IOException {
+        List<String> lines = new ArrayList<String>();
+        List<Receptionist> receptionists = new ArrayList<Receptionist>();
+        lines = readLinesFromFile("src\\ReceptionistLoginData");
+        String name="",userName="",password="";
+        for (int i = 0; i < lines.size(); i += 3)
+        {
+            userName = lines.get(i);
+            password = lines.get(i+1);
+            name = lines.get(i + 2);
+            receptionists.add(new Receptionist(name,userName,password));
+            System.out.println("Receptionist: "+name);
+        }
+
+        return receptionists;
+    }
+    public static List<Manager> readManagers() throws IOException {
+        List<String> lines = new ArrayList<String>();
+        List<Manager> receptionists = new ArrayList<Manager>();
+        lines = readLinesFromFile("src\\ManagerLoginData");
+        String name="",userName="",password="";
+        for (int i = 0; i < lines.size(); i += 3)
+        {
+            userName = lines.get(i);
+            password = lines.get(i+1);
+            name = lines.get(i + 2);
+            receptionists.add(new Manager(name,userName,password));
+            System.out.println("Manager: "+name);
+        }
+
+        return receptionists;
+    }
     public static String[] ReadRequests(JComboBox requests) throws IOException {
         List<String> lines = new ArrayList<String>();
         lines = readLinesFromFile("src\\Requests");
@@ -193,7 +228,7 @@ public static String[] getUsers(boolean asManager)
     }
     public static void addNewEmployee(boolean isManager,String name,String userName,String password) throws IOException {
         List<String> lines = new ArrayList<String>();
-        String pathName="src\\ReceptionistLoginData";;
+        String pathName="src\\ReceptionistLoginData";
         lines.add(userName);
         lines.add(password);
         lines.add(name);
@@ -206,7 +241,13 @@ public static String[] getUsers(boolean asManager)
         }
         myWriter.close();
     }
-    public static String ReadReservationLineFromFile(String reservationNumber, String pathName) throws IOException {
+    public static void addNews(String newsLine) throws IOException {
+        String pathName="src\\News";
+        FileWriter myWriter = new FileWriter(pathName,true);
+        myWriter.write(newsLine+" <br><br>\n");
+        myWriter.close();
+    }
+    public static String readReservationLineFromFile(String reservationNumber, String pathName) throws IOException {
         List<String> lines = new ArrayList<String>();
         String details="";
         lines = readLinesFromFile(pathName);
@@ -238,6 +279,18 @@ public static String[] getUsers(boolean asManager)
         }
         myWriter.close();
     }
+    public static void deleteLastNews() throws IOException {
+        List<String> lines = new ArrayList<String>();
+        lines = readLinesFromFile("src\\News");
+        File file =new File("src\\News");
+        file.delete();
+        FileWriter myWriter = new FileWriter("src\\News",true);
+        for (int i = 1; i < lines.size(); i ++)
+        {
+                myWriter.write(lines.get(i)+"\n");
+        }
+        myWriter.close();
+    }
     public static String getUserNameSubString(String userString)
     {
         char[] validation=userString.toCharArray();
@@ -253,9 +306,26 @@ public static String[] getUsers(boolean asManager)
                         return userName;
                 }
             }
-            }
+        }
         return userName;
         }
+    public static String getReservationNumberSubString(String userString)
+    {
+        char[] validation=userString.toCharArray();
+        String reservationNumber="";
+        for(int i=0;i<userString.length();i++)
+        {
+            if (validation[i] != '-')
+            {
+                reservationNumber += validation[i];
+            }
+            else
+            {
+                return reservationNumber;
+            }
+        }
+        return reservationNumber;
+    }
     public static void deleteUserFromFile(String username, boolean isManager) throws IOException {
         List<String> lines = new ArrayList<String>();
         String pathName = "src\\ReceptionistLoginData" ;
@@ -275,6 +345,22 @@ public static String[] getUsers(boolean asManager)
                 {
                     i+=2;
                 }
+        }
+        myWriter.close();
+    }
+    public static void deleteReservationFromFile(String reservationNumber) throws IOException {
+        List<String> lines = new ArrayList<String>();
+        String pathName = "src\\ReservationsData" ;
+        lines = readLinesFromFile(pathName);
+        File file = new File(pathName);
+        file.delete();
+        FileWriter myWriter = new FileWriter(pathName, true);
+        for (int i = 0; i < lines.size(); i++)
+        {
+            if (!lines.get(i).startsWith(reservationNumber))
+            {
+                myWriter.write(lines.get(i) + "\n");
+            }
         }
         myWriter.close();
     }
@@ -323,17 +409,17 @@ int value=0;
     myWriter.close();
 
 }
-    public static void AddCancelRequest(String reservationNumber,String cancelReason) throws IOException {
+    public static void addCancelRequest(String reservationNumber, String cancelReason) throws IOException {
         FileWriter myWriter = new FileWriter("src\\Requests",true);
         myWriter.write(reservationNumber+"- Cancel Reason: "+cancelReason+"\n");
         myWriter.close();
     }
-    public static void AddChangeRequest(String reservationNumber,String change,String cancelReason) throws IOException {
+    public static void addChangeRequest(String reservationNumber, String change, String cancelReason) throws IOException {
         FileWriter myWriter = new FileWriter("src\\Requests",true);
         myWriter.write(reservationNumber+"- Change wanted:" + change+", Change Reason: "+cancelReason+"\n");
         myWriter.close();
     }
-    public static String[] ReadReservationsNumber(JComboBox reservations) throws IOException {
+    public static String[] readReservationsNumber(JComboBox reservations) throws IOException {
         List<String> lines = new ArrayList<String>();
         lines = readLinesFromFile("src\\ReservationsData");
         String [] reservationsNumbers=new String[lines.size()];
@@ -350,7 +436,7 @@ int value=0;
         }
         return reservationsNumbers;
     }
-    public static void ChangeLastResNumber(int lastRes) throws IOException {
+    public static void changeLastResNumber(int lastRes) throws IOException {
     List<String> lines = new ArrayList<String>();
     lines = readLinesFromFile("src\\HotelData");
     File file =new File("src\\HotelData");
@@ -363,7 +449,7 @@ int value=0;
     myWriter.write(Integer.toString(lastRes));
     myWriter.close();
 }
-    public static void RefreshDate(LocalDate date, JSpinner Day,JSpinner Month,JSpinner Year)
+    public static void refreshDate(LocalDate date, JSpinner Day, JSpinner Month, JSpinner Year)
 {
     Day.setValue(date.getDayOfMonth());
     Month.setValue(date.getMonthValue());
@@ -385,7 +471,7 @@ int value=0;
         return lines;
     }
 
-    public static List<String> ShowAvailableRooms(LocalDate checkIn, LocalDate checkOut) {
+    public static List<String> showAvailableRooms(LocalDate checkIn, LocalDate checkOut) {
         List<String> lines = new ArrayList<String>();
         int[] minimuns = {Hotel.twinAmount, Hotel.familyAmount, Hotel.deluxeAmount, Hotel.premiumAmount, Hotel.suiteAmount};
         for (LocalDate i = checkIn; i.equals(checkOut) || i.isBefore(checkOut); i=i.plusDays(1))
@@ -394,7 +480,7 @@ int value=0;
             if (dateFile.exists()) {
                 lines = readLinesFromFile("src\\" + i.toString()+".txt");
                 for (int j = 0; j < lines.size(); j++) {
-                    minimuns[j] = GetMin(minimuns[j], Integer.parseInt(lines.get(j)));
+                    minimuns[j] = getMin(minimuns[j], Integer.parseInt(lines.get(j)));
                 }
             }
         }
@@ -407,7 +493,7 @@ int value=0;
         return lines;
     }
 
-    private static int GetMin(int left, int right) {
+    private static int getMin(int left, int right) {
         if (left > right) {
             left = right;
         }

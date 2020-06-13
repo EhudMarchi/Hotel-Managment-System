@@ -17,14 +17,16 @@ public class ViewReservationDetailsScreen extends JFrame {
         initComponents();
     }
     private void backButtonMouseClicked() {
-        Program.baseScreen.setEnabled(true);
-        Program.actionScreen.dispose();
+        ActManager.baseScreen.setEnabled(true);
+        ActManager.actionScreen.dispose();
     }
     private void resNumComboBoxactionPerformed() throws IOException {
-        descriptionLabel.setText("<html>"+ActManager.ReadReservationLineFromFile(resNumComboBox.getSelectedItem().toString(),"src\\ReservationsData"));
+        descriptionLabel.setText("<html>"+ActManager.readReservationLineFromFile(resNumComboBox.getSelectedItem().toString(),"src\\ReservationsData"));
     }
     private void initComponents() throws IOException {
-        resNumComboBox = new JComboBox(ActManager.ReadReservationsNumber(resNumComboBox));
+        this.setDefaultCloseOperation(0);
+        this.setExtendedState(0);
+        resNumComboBox = new JComboBox(ActManager.readReservationsNumber(resNumComboBox));
         reservatioLabel = new JLabel();
         backButton = new JButton();
         descriptionLabel = new JLabel();

@@ -24,19 +24,21 @@ public class ManagerOptionsScreen extends JFrame {
         roomsSpinner.setModel(twinModel);
     }
     private void backButtonMouseClicked() {
-        Program.baseScreen.setVisible(true);
-        Program.actionScreen.dispose();
+        ActManager.baseScreen.setVisible(true);
+        ActManager.actionScreen.dispose();
     }
     private void confirmButtonMouseClicked() throws IOException {
         if(optionsComboBox.getSelectedItem().toString().contains("Add Receptionist"))
         {
            ActManager.addNewEmployee(false,NameTextField.getText(),userNameTextField.getText(),passwordTextField.getText());
            JOptionPane.showMessageDialog(null, "New receptionist has been added", "Notice", JOptionPane.WARNING_MESSAGE);
+            ActManager.addNews("New receptionist has been added: "+NameTextField.getText());
         }
         else if (optionsComboBox.getSelectedItem().toString().contains("Add Manager"))
         {
             ActManager.addNewEmployee(true,NameTextField.getText(),userNameTextField.getText(),passwordTextField.getText());
             JOptionPane.showMessageDialog(null, "New manager has been added", "Notice", JOptionPane.WARNING_MESSAGE);
+            ActManager.addNews("New manager has been added: "+NameTextField.getText());
         }
         else if(optionsComboBox.getSelectedItem().toString().contains("Remove Receptionist")) {
             ActManager.deleteUserFromFile(ActManager.getUserNameSubString(recepComboBox.getSelectedItem().toString()),false);
@@ -52,6 +54,8 @@ public class ManagerOptionsScreen extends JFrame {
             String roomType=roomTypeComboBox.getSelectedItem().toString();
             ActManager.changeRoomsAmount(roomType, roomsAmount);
             JOptionPane.showMessageDialog(null, roomsAmount+" "+roomType+" rooms has been added", "Notice", JOptionPane.WARNING_MESSAGE);
+            ActManager.addNews(roomsAmount+" "+roomType+" rooms has been added");
+
         }
         else if(optionsComboBox.getSelectedItem().toString().contains("Remove Rooms"))
         {
@@ -61,6 +65,9 @@ public class ManagerOptionsScreen extends JFrame {
             roomsAmount*=(-1);
             JOptionPane.showMessageDialog(null, roomsAmount+" "+roomType+" rooms has been removed", "Notice", JOptionPane.WARNING_MESSAGE);
         }
+        ActManager.actionScreen.dispose();
+        ActManager.actionScreen=new ManagerOptionsScreen();
+        ActManager.actionScreen.setVisible(true);
     }
     private void optionsComboBoxactionPerformed() throws IOException {
         setVislbeComponents();
@@ -146,6 +153,7 @@ public class ManagerOptionsScreen extends JFrame {
         }
     }
     private void initComponents() throws IOException {
+        this.setDefaultCloseOperation(0);
         String[] optionsString = { "Choose:","Add Receptionist", "Remove Receptionist","Add Manager", "Remove Manager", "Add Rooms", "Remove Rooms"};
         optionsComboBox = new JComboBox(optionsString);
         String[] roomsString = { "Twin","Family", "Deluxe", "Premium", "Suite"};

@@ -24,7 +24,7 @@ public class Reservation {
     public Reservation() throws IOException {
         Hotel.numOfReservations++;
         reservationNumber=Hotel.numOfReservations;
-        ActManager.ChangeLastResNumber(reservationNumber);
+        ActManager.changeLastResNumber(reservationNumber);
     }
     public Reservation(Guest guest,LocalDate checkInDate,LocalDate checkOutDate , int roomsNumber, int guestAmount, int creditCardNumber,String receptionistName)
     {

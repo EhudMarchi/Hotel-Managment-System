@@ -29,7 +29,7 @@ public class ReservationCreationScreenTest {
         assertEquals(false,screen.phoneValidation("05-62665731"));
         assertEquals(false,screen.phoneValidation("3**%^-*#6^$1"));
         assertEquals(false,screen.phoneValidation(""));
-        assertEquals(false,screen.phoneValidation("ase-fsdfrrr"));
+        assertEquals(false,screen.phoneValidation("ase-fafnir"));
         assertEquals(false,screen.phoneValidation("11111111111"));
         assertEquals(false,screen.phoneValidation("0523"));
     }

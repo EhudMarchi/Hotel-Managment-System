@@ -17,16 +17,35 @@ public class RequestsScreen extends JFrame {
         initComponents();
     }
     private void backButtonMouseClicked() {
-        Program.baseScreen.setVisible(true);
-        Program.actionScreen.dispose();
+        ActManager.baseScreen.setVisible(true);
+        ActManager.actionScreen.dispose();
     }
     private void declineButtonMouseClicked() throws IOException {
-        ActManager.deleteLineFromFile(requestsComboBox.getSelectedItem().toString(),"src\\Requests");
-        JOptionPane.showMessageDialog(null,"You declined request!",
+        if (!requestsComboBox.getSelectedItem().toString().equals("")){
+            ActManager.deleteLineFromFile(requestsComboBox.getSelectedItem().toString(), "src\\Requests");
+        JOptionPane.showMessageDialog(null, "You declined request!",
                 "Notice", JOptionPane.WARNING_MESSAGE);
+        ActManager.addNews("Request: "+requestsComboBox.getSelectedItem().toString()+" -<small>Declined</small>");
+    }
+    }
+    private void confirmButtonMouseClicked() throws IOException {
+        if (!requestsComboBox.getSelectedItem().toString().equals("")) {
+            ActManager.deleteLineFromFile(requestsComboBox.getSelectedItem().toString(), "src\\Requests");
+            JOptionPane.showMessageDialog(null, "You confirmed request!",
+                    "Notice", JOptionPane.WARNING_MESSAGE);
+            if (requestsComboBox.getSelectedItem().toString().contains("Cancel")) {
+                ActManager.deleteReservationFromFile(ActManager.getReservationNumberSubString(requestsComboBox.getSelectedItem().toString()));
+                JOptionPane.showMessageDialog(null, "Reservation cancelled!",
+                        "Notice", JOptionPane.WARNING_MESSAGE);
+            } else {
+                //change reservation
+            }
+            ActManager.addNews("Request: "+requestsComboBox.getSelectedItem().toString()+" -<small>Confirmed</small>");
+        }
     }
 
     private void initComponents() throws IOException {
+        this.setDefaultCloseOperation(0);
         requestsComboBox = new JComboBox(ActManager.ReadRequests(requestsComboBox));
         requestsLabel = new JLabel();
         backButton = new JButton();
@@ -72,7 +91,16 @@ public class RequestsScreen extends JFrame {
         confirmButton.setForeground(new Color(0, 180, 80));
         contentPane.add(confirmButton);
         confirmButton.setBounds(225, 310, 165, 55);
-
+        confirmButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    confirmButtonMouseClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
         //---- declineButton ----
         declineButton.setText("Decline");
         declineButton.setFont(declineButton.getFont().deriveFont(declineButton.getFont().getStyle() | Font.BOLD, declineButton.getFont().getSize() + 7f));

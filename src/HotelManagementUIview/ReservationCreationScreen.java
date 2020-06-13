@@ -21,8 +21,8 @@ public class ReservationCreationScreen extends JFrame {
     public ReservationCreationScreen(String name) throws ParseException {
         initComponents();
         recepName=name;
-        ActManager.RefreshDate(checkIn.minusYears(2000),checkInDaySpinner,checkInMonthSpinner,checkInYearSpinner);
-        ActManager.RefreshDate(checkIn.plusDays(1),checkOutDaySpinner,checkOutMonthSpinner,checkOutYearSpinner);
+        ActManager.refreshDate(checkIn.minusYears(2000),checkInDaySpinner,checkInMonthSpinner,checkInYearSpinner);
+        ActManager.refreshDate(checkIn.plusDays(1),checkOutDaySpinner,checkOutMonthSpinner,checkOutYearSpinner);
     }
     private void CheckInChange() {
 
@@ -38,8 +38,8 @@ public class ReservationCreationScreen extends JFrame {
         {
             checkOut=checkIn.plusDays(1);
         }
-            ActManager.RefreshDate(checkIn,checkInDaySpinner,checkInMonthSpinner,checkInYearSpinner);
-            ActManager.RefreshDate(checkOut,checkOutDaySpinner,checkOutMonthSpinner,checkOutYearSpinner);
+            ActManager.refreshDate(checkIn,checkInDaySpinner,checkInMonthSpinner,checkInYearSpinner);
+            ActManager.refreshDate(checkOut,checkOutDaySpinner,checkOutMonthSpinner,checkOutYearSpinner);
     }
     }
     private void CheckOutChange() {
@@ -54,8 +54,8 @@ public class ReservationCreationScreen extends JFrame {
             {
                 checkOut=checkIn.plusDays(1);
             }
-            ActManager.RefreshDate(checkIn,checkInDaySpinner,checkInMonthSpinner,checkInYearSpinner);
-            ActManager.RefreshDate(checkOut,checkOutDaySpinner,checkOutMonthSpinner,checkOutYearSpinner);
+            ActManager.refreshDate(checkIn,checkInDaySpinner,checkInMonthSpinner,checkInYearSpinner);
+            ActManager.refreshDate(checkOut,checkOutDaySpinner,checkOutMonthSpinner,checkOutYearSpinner);
         }
 
     }
@@ -157,14 +157,14 @@ public class ReservationCreationScreen extends JFrame {
         LocalDate checkOut= LocalDate.of(Integer.parseInt(checkOutYearSpinner.getValue().toString()), (Integer) checkOutMonthSpinner.getValue(),(Integer) checkOutDaySpinner.getValue());
         LocalDate checkIn=LocalDate.of((Integer) checkInYearSpinner.getValue(),(Integer)checkInMonthSpinner.getValue(),(Integer) checkInDaySpinner.getValue());
         JLabel roomsDescription=roomsLabel;
-        Program.roomsScreen=new AvailableRoomsScreen(checkIn,checkOut,roomsDescription);
-        Program.roomsScreen.setVisible(true);
-        Program.actionScreen.setVisible(false);
+        ActManager.roomsScreen=new AvailableRoomsScreen(checkIn,checkOut,roomsDescription);
+        ActManager.roomsScreen.setVisible(true);
+        ActManager.actionScreen.setVisible(false);
     }
 
     private void backButtonMouseClicked() {
-        Program.baseScreen.setVisible(true);
-        Program.actionScreen.dispose();
+        ActManager.baseScreen.setVisible(true);
+        ActManager.actionScreen.dispose();
     }
 
     private void continueToPaymentButtonMouseClicked() {
@@ -199,14 +199,14 @@ public class ReservationCreationScreen extends JFrame {
             {
                 String detailsLine=ActManager.createReservationLine(NameTextField.getText(),emailTextField.getText(),phoneTextField.getText(),guestsAmountSpinner.getValue().toString(),roomsLabel.getText(),checkIn,checkOut,recepName);
                 String details=ActManager.createReservationDetails(NameTextField.getText(),emailTextField.getText(),phoneTextField.getText(),guestsAmountSpinner.getValue().toString(),roomsLabel.getText(),checkIn,checkOut,recepName);
-                Program.paymentScreen = new PaymentScreen(details,detailsLine,checkIn,checkOut,priceLabel.getText(),roomsLabel);//values
-                Program.paymentScreen.setVisible(true);
-                Program.actionScreen.setVisible(false);
+                ActManager.paymentScreen = new PaymentScreen(details,detailsLine,checkIn,checkOut,priceLabel.getText(),roomsLabel);//values
+                ActManager.paymentScreen.setVisible(true);
+                ActManager.actionScreen.setVisible(false);
             }
         }
     }
     private void initComponents() throws ParseException {
-
+        this.setDefaultCloseOperation(0);
         continueToPaymentButton = new JButton();
         Headlinelabel = new JLabel();
         guestNamelabel = new JLabel();

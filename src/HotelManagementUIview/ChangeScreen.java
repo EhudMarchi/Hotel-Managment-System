@@ -18,18 +18,18 @@ public class ChangeScreen extends JFrame {
         initComponents();
     }
     private void backButtonMouseClicked() {
-        Program.baseScreen.setEnabled(true);
-        Program.actionScreen.dispose();
+        ActManager.baseScreen.setEnabled(true);
+        ActManager.actionScreen.dispose();
     }
     private void confirmButtonMouseClicked() throws IOException {
-        ActManager.AddChangeRequest(resNumComboBox.getSelectedItem().toString(),propertyComboBox.getSelectedItem().toString(),reasonComboBox.getSelectedItem().toString());
+        ActManager.addChangeRequest(resNumComboBox.getSelectedItem().toString(),propertyComboBox.getSelectedItem().toString(),reasonComboBox.getSelectedItem().toString());
         System.out.println("Request added: " + resNumComboBox.getSelectedItem().toString()+" "+reasonComboBox.getSelectedItem().toString());
         JOptionPane.showMessageDialog(null,"Your request was successfully sent to the manager!",
                 "Notice", JOptionPane.WARNING_MESSAGE);
     }
     private void initComponents() throws IOException {
-
-        resNumComboBox = new JComboBox(ActManager.ReadReservationsNumber(resNumComboBox));
+        this.setDefaultCloseOperation(0);
+        resNumComboBox = new JComboBox(ActManager.readReservationsNumber(resNumComboBox));
         reservatioLabel = new JLabel();
         String[] reasonsStrings = { "Illness", "Unsatisfied", "Satisfied", "Bad Weather", "Other" };
         reasonComboBox = new JComboBox(reasonsStrings);

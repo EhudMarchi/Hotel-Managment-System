@@ -49,8 +49,8 @@ public class PaymentScreen extends JFrame {
         {
             ActManager.createReservation(Hotel.numOfReservations,dLine,checkin,checkout,roomsDescription);
             this.dispose();
-            Program.actionScreen.dispose();
-            Program.baseScreen.setVisible(true);
+            ActManager.actionScreen.dispose();
+            ActManager.baseScreen.setVisible(true);
             JOptionPane.showMessageDialog(null,"Your reservation was successfully added!",
                     "Notice", JOptionPane.WARNING_MESSAGE);
         }
@@ -62,11 +62,13 @@ public class PaymentScreen extends JFrame {
     }
 
     private void backButtonMouseClicked() {
-        Program.actionScreen.setVisible(true);
-        Program.paymentScreen.dispose();
+        ActManager.actionScreen.setVisible(true);
+        ActManager.paymentScreen.dispose();
     }
 
     private void initComponents() {
+        this.setDefaultCloseOperation(0);
+        this.setResizable(false);
         CreditNumber = new JTextField();
         descriptionLabel = new JLabel();
         creditCardLabel = new JLabel();

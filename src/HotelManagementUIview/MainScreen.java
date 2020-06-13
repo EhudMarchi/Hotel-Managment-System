@@ -1,10 +1,13 @@
 
 package HotelManagementUIview;
 import java.awt.event.*;
-import HotelManagementController.Program;
+
+import HotelManagementController.ActManager;
+
 import java.awt.*;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.TimerTask;
 import javax.swing.*;
 
 /**
@@ -12,6 +15,43 @@ import javax.swing.*;
  */
 public class MainScreen extends JFrame {//Singelton Design Pettern
     private static MainScreen single_instance=null;
+    TimerTask newsScroller = new TimerTask() {
+        int runTimes=0;
+        @Override
+        public void run() {
+            if(ActManager.countOccurences(newsLabel.getText(),'>')>46)
+            {
+                newsData=ActManager.readLinesFromFile("src\\News")+"<html>";
+                if(newsData.length()>10)
+                {
+                    newsLabel.setText("<html>"+newsData);
+                }
+                else
+                {
+                    newsLabel.setText("");
+                }
+            }
+            newsLabel.setText("<html><br>"+newsLabel.getText());
+            runTimes++;
+            if(runTimes>80)
+            {
+                try {
+                    ActManager.deleteLastNews();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                newsData=ActManager.readLinesFromFile("src\\News")+"<html>";
+                newsLabel.setText("<html>"+newsData);
+                runTimes=0;
+            }
+        }
+    };
+    Timer timer = new Timer(800, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            newsScroller.run();
+        }
+    });
     public static MainScreen MainScreen(String name,boolean isManager) {
         if (single_instance == null)
         {
@@ -22,6 +62,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
     @Override
     public void dispose()
     {
+        timer.stop();
         super.dispose();
         System.out.println("The only main screen has been deleted");
     }
@@ -33,61 +74,66 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         recepName = name;
         managerMode=isManager;
         if(managerMode) {
-            modeLabel.setText("Manager");
+            modeLabel.setText("Manager: ");
             requestsButton.setEnabled(true);
             managerOptionsButton.setEnabled(true);
         }
+        modeLabel.setText((modeLabel.getText()+name));
+        timer.start();
         System.out.println("A single main screen has been created");
     }
     private void createReservationButtonMouseClicked() throws IOException, ParseException {
-        Program.actionScreen=new ReservationCreationScreen(recepName);
-        Program.actionScreen.setVisible(true);
-        Program.baseScreen.setVisible(false);
+        ActManager.actionScreen=new ReservationCreationScreen(recepName);
+        ActManager.actionScreen.setVisible(true);
+        ActManager.baseScreen.setVisible(false);
     }
     private void requestsButtonMouseClicked() throws IOException {
         if(managerMode)
         {
-        this.setVisible(false);
-        Program.actionScreen=new RequestsScreen();
-        Program.actionScreen.setVisible(true);
+            this.setVisible(false);
+            ActManager.actionScreen=new RequestsScreen();
+            ActManager.actionScreen.setVisible(true);
     }
     }
     private void cancelReservationButtonMouseClicked() throws IOException {
-        Program.baseScreen.setEnabled(false);
-        Program.actionScreen=new CancelScreen();
-        Program.actionScreen.setVisible(true);
+        ActManager.baseScreen.setEnabled(false);
+        ActManager.actionScreen=new CancelScreen();
+        ActManager.actionScreen.setVisible(true);
     }
     private void viewReservationDetailsButtonMouseClicked() throws IOException {
-        Program.baseScreen.setEnabled(false);
-        Program.actionScreen=new ViewReservationDetailsScreen();
-        Program.actionScreen.setVisible(true);
+        ActManager.baseScreen.setEnabled(false);
+        ActManager.actionScreen=new ViewReservationDetailsScreen();
+        ActManager.actionScreen.setVisible(true);
     }
     private void logoutButtonMouseClicked() {
         this.dispose();
-        Program.baseScreen=new LoginScreen();
-        Program.baseScreen.setVisible(true);
+        ActManager.baseScreen=new LoginScreen();
+        ActManager.baseScreen.setVisible(true);
     }
     private void changeReservationButtonMouseClicked() throws IOException {
-        Program.baseScreen.setEnabled(false);
-        Program.actionScreen=new ChangeScreen();
-        Program.actionScreen.setVisible(true);
+        ActManager.baseScreen.setEnabled(false);
+        ActManager.actionScreen=new ChangeScreen();
+        ActManager.actionScreen.setVisible(true);
     }
     private void managerOptionsMouseClicked() throws IOException {
         if(managerMode)
         {
             this.setVisible(false);
-            Program.actionScreen=new ManagerOptionsScreen();
-            Program.actionScreen.setVisible(true);
+            ActManager.actionScreen=new ManagerOptionsScreen();
+            ActManager.actionScreen.setVisible(true);
         }
     }
 
     private void initComponents() {
+        this.setDefaultCloseOperation(0);
         createReservationButton = new JButton();
         changeReservationButton = new JButton();
         cancelReservationButton = new JButton();
         viewReservationDetailsButton = new JButton();
         logoutButton = new JButton();
         modeLabel = new JLabel();
+        newsLabel = new JLabel();
+        newsHeadLineLabel = new JLabel();
         requestsButton = new JButton();
         label1 = new JLabel();
         backgroundLabel = new JLabel();
@@ -187,11 +233,32 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         managerOptionsButton.setBounds(30, 385, 125, 45);
         managerOptionsButton.setEnabled(false);
         //---- modeLabel ----
-        modeLabel.setText("Receptionist");
+        modeLabel.setText("Receptionist: ");
         modeLabel.setForeground(Color.blue);
         contentPane.add(modeLabel);
-        modeLabel.setBounds(new Rectangle(new Point(15, 10), modeLabel.getPreferredSize()));
-
+        modeLabel.setBounds(15, 10, 250, 20);
+        //---- newsHeadLineLabel ----
+        newsHeadLineLabel.setText("News");
+        newsHeadLineLabel.setForeground(Color.blue);
+        contentPane.add(newsHeadLineLabel);
+        newsHeadLineLabel.setBounds(110, 100, 250, 20);
+        //---- newsLabel ----
+        newsLabel.setFont(newsLabel.getFont().deriveFont(newsLabel.getFont().getStyle(),9));
+        newsLabel.setVerticalAlignment(JLabel.TOP);
+        newsData=ActManager.readLinesFromFile("src\\News")+"<html>";
+        if(newsData.length()>10)
+        {
+            newsLabel.setText("<html>"+newsData);
+        }
+        else
+        {
+            newsLabel.setText("");
+        }
+        newsLabel.setOpaque(true);
+        newsLabel.setForeground(Color.black);
+        newsLabel.setBackground(Color.white);
+        contentPane.add(newsLabel);
+        newsLabel.setBounds(15, 120, 220, 235);
         //---- requestsButton ----
         requestsButton.setText("Requests");
         requestsButton.setEnabled(false);
@@ -244,11 +311,14 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
     private JButton viewReservationDetailsButton;
     private JButton logoutButton;
     private JLabel modeLabel;
+    private JLabel newsLabel;
+    private JLabel newsHeadLineLabel;
     private JButton requestsButton;
     private JButton managerOptionsButton;
     private JLabel label1;
     private JLabel backgroundLabel;
     private String recepName;
     private boolean managerMode;
+    private String newsData;
 
 }

@@ -2,6 +2,7 @@ package HotelManagmentModel;
 
 import HotelManagementController.ActManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,9 @@ public class Hotel {
     public static  int deluxeAmount;//201-222
     public static  int premiumAmount;//301-315
     public static  int suiteAmount;//401-410
-
-    public Hotel() {
+    public static List<Receptionist> receptionistsList;
+    public static List<Manager> managersList;
+    public Hotel() throws IOException {
         List<String> lines = new ArrayList<String>();
         lines = ActManager.readLinesFromFile("src\\HotelData");
         twinAmount=Integer.parseInt(lines.get(0));
@@ -21,6 +23,8 @@ public class Hotel {
         premiumAmount=Integer.parseInt(lines.get(3));
         suiteAmount=Integer.parseInt(lines.get(4));
         numOfReservations=Integer.parseInt(lines.get(5));
+        receptionistsList=ActManager.readReceptionists();
+        managersList=ActManager.readManagers();
     }
 
     public static int getNumOfReservations() {
