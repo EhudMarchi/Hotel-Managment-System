@@ -230,7 +230,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
             }
         });
         contentPane.add(managerOptionsButton);
-        managerOptionsButton.setBounds(30, 385, 125, 45);
+        managerOptionsButton.setBounds(60, 385, 125, 45);
         managerOptionsButton.setEnabled(false);
         //---- modeLabel ----
         modeLabel.setText("Receptionist: ");

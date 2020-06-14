@@ -70,7 +70,7 @@ public class RequestsScreen extends JFrame {
         requestsLabel.setText("Requests:");
         requestsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         requestsLabel.setFont(requestsLabel.getFont().deriveFont(requestsLabel.getFont().getStyle() | Font.BOLD, requestsLabel.getFont().getSize() + 25f));
-        requestsLabel.setForeground(Color.white);
+        requestsLabel.setForeground(Color.yellow);
         contentPane.add(requestsLabel);
         requestsLabel.setBounds(235, 60, 355, 50);
 

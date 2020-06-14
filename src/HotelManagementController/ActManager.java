@@ -154,20 +154,37 @@ public class ActManager {
         details="<html>Guest Name: "+gName+"<br>Guest Email: "+gEmail+"<br>"+"Guest Phone Number: "+gPhone+"<br>Guests Amount: "+gAmount+"<br>Guest Rooms: "+gRooms+"<br>Check In Date: "+checkIn.getDayOfMonth()+"/"+checkIn.getMonthValue()+"/"+checkIn.getYear()+"<br>Check Out Date: "+checkOut.getDayOfMonth()+"/"+checkOut.getMonthValue()+"/"+checkOut.getYear()+"<br>Receptionist Name: "+receptionistName+"<html>";
         return details;
     }
-public static String[] getUsers(boolean asManager)
-{
-    List<String> lines = new ArrayList<String>();
-    if (asManager) {
+    public static String[] getUsers(boolean asManager)
+    {
+        List<String> lines = new ArrayList<String>();
+        if (asManager) {
         lines = readLinesFromFile("src\\ManagerLoginData");
     } else {
         lines = readLinesFromFile("src\\ReceptionistLoginData");
     }
-    String[] users = new String[lines.size()/3];
-    for (int i = 0,j=0; i < lines.size(); i += 3,j++) {
+         String[] users = new String[lines.size()/3];
+         for (int i = 0,j=0; i < lines.size(); i += 3,j++) {
         users[j]=lines.get(i+2)+" User Name:"+lines.get(i)+" Password:"+lines.get(i+1);
     }
-    return users;
-}
+         return users;
+    }
+    public static boolean isUserExist(String userName,boolean asManager)
+    {
+        boolean isExists=false;
+        List<String> lines = new ArrayList<String>();
+        if (asManager) {
+            lines = readLinesFromFile("src\\ManagerLoginData");
+        } else {
+            lines = readLinesFromFile("src\\ReceptionistLoginData");
+        }
+        for (int i = 0; i < lines.size(); i += 3)
+        {
+            if(lines.get(i).equals(userName))
+                isExists=true;
+        }
+
+        return isExists;
+    }
     public static String login(String userName, String password, boolean asManager) throws IOException {
         List<String> lines = new ArrayList<String>();
         if (asManager) {

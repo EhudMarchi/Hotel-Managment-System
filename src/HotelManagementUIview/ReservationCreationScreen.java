@@ -302,7 +302,7 @@ public class ReservationCreationScreen extends JFrame {
         guestsAmountlabel.setForeground(Color.white);
         guestsAmountlabel.setBackground(Color.black);
         //---- guestsAmountlabel2 ----
-        roomsLabel.setText("Rooms Number:");
+        roomsLabel.setText("Rooms Description:");
         roomsLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         roomsLabel.setOpaque(true);
         roomsLabel.setBackground(Color.black);

@@ -69,7 +69,7 @@ public class LoginScreen extends JFrame {
         loginButton.setText("Login");
         loginButton.setFont(loginButton.getFont().deriveFont(loginButton.getFont().getStyle() | Font.ITALIC));
         //----LoginLabel-----
-        loginLabel.setText("Login Label");
+        loginLabel.setText("Login Screen");
         loginLabel.setFont(loginLabel.getFont().deriveFont(loginLabel.getFont().getStyle() | Font.BOLD, loginLabel.getFont().getSize() + 19f));
         loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
         contentPane.add(loginLabel);

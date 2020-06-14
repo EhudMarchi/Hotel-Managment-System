@@ -30,15 +30,35 @@ public class ManagerOptionsScreen extends JFrame {
     private void confirmButtonMouseClicked() throws IOException {
         if(optionsComboBox.getSelectedItem().toString().contains("Add Receptionist"))
         {
+            if ((nameValidation(NameTextField.getText()) != "")) {
+                JOptionPane.showMessageDialog(null, nameValidation(NameTextField.toString()),
+                        "Notice", JOptionPane.WARNING_MESSAGE);
+            }
+            else if(!ActManager.isUserExist(userNameTextField.getText(),false)){
            ActManager.addNewEmployee(false,NameTextField.getText(),userNameTextField.getText(),passwordTextField.getText());
            JOptionPane.showMessageDialog(null, "New receptionist has been added", "Notice", JOptionPane.WARNING_MESSAGE);
             ActManager.addNews("New receptionist has been added: "+NameTextField.getText());
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Receptionist username: "+userNameTextField.getText()+" is already exists",
+                        "Notice", JOptionPane.WARNING_MESSAGE);
+            }
         }
         else if (optionsComboBox.getSelectedItem().toString().contains("Add Manager"))
         {
-            ActManager.addNewEmployee(true,NameTextField.getText(),userNameTextField.getText(),passwordTextField.getText());
-            JOptionPane.showMessageDialog(null, "New manager has been added", "Notice", JOptionPane.WARNING_MESSAGE);
-            ActManager.addNews("New manager has been added: "+NameTextField.getText());
+            if ((nameValidation(NameTextField.getText()) != "")) {
+                JOptionPane.showMessageDialog(null, nameValidation(NameTextField.toString()),
+                        "Notice", JOptionPane.WARNING_MESSAGE);
+            }
+            else if(!ActManager.isUserExist(userNameTextField.getText(),true)){
+                ActManager.addNewEmployee(true, NameTextField.getText(), userNameTextField.getText(), passwordTextField.getText());
+                JOptionPane.showMessageDialog(null, "New manager has been added", "Notice", JOptionPane.WARNING_MESSAGE);
+                ActManager.addNews("New manager has been added: " + NameTextField.getText());
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Manager username: "+userNameTextField.getText()+" is already exists",
+                        "Notice", JOptionPane.WARNING_MESSAGE);
+            }
         }
         else if(optionsComboBox.getSelectedItem().toString().contains("Remove Receptionist")) {
             ActManager.deleteUserFromFile(ActManager.getUserNameSubString(recepComboBox.getSelectedItem().toString()),false);
@@ -152,6 +172,24 @@ public class ManagerOptionsScreen extends JFrame {
             recepComboBox.setVisible((false));
         }
     }
+    public String nameValidation(String Name)
+    {
+        char[] validation=Name.toCharArray();
+        boolean error=false;
+        String errorText="";
+        if(Name.length()==0)
+        {
+            error=true;
+        }
+        for (int i = 0; i < Name.length(); i++) {
+            if (!Character.isLetter(validation[i])) {
+                error = true;
+            }
+        }
+        if (error)
+            errorText = "Your name is not valid, please enter only letters";
+        return errorText;
+    }
     private void initComponents() throws IOException {
         this.setDefaultCloseOperation(0);
         String[] optionsString = { "Choose:","Add Receptionist", "Remove Receptionist","Add Manager", "Remove Manager", "Add Rooms", "Remove Rooms"};
@@ -239,7 +277,7 @@ public class ManagerOptionsScreen extends JFrame {
         managerOptionsLabel.setText("Manager Options:");
         managerOptionsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         managerOptionsLabel.setFont(managerOptionsLabel.getFont().deriveFont(managerOptionsLabel.getFont().getStyle() | Font.BOLD, managerOptionsLabel.getFont().getSize() + 25f));
-        managerOptionsLabel.setForeground(Color.white);
+        managerOptionsLabel.setForeground(Color.yellow);
         contentPane.add(managerOptionsLabel);
         managerOptionsLabel.setBounds(235, 60, 355, 50);
 
