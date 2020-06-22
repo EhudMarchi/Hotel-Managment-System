@@ -19,8 +19,9 @@ public class ActManager {
     public static JFrame actionScreen;
     public static JFrame roomsScreen;
     public static JFrame paymentScreen;
+    private static Hotel myHotel;
     public static void runHotelManagementSystem() throws IOException {
-        Hotel myHotel=new Hotel();
+        myHotel=new Hotel();
         baseScreen = new LoginScreen();
         baseScreen.setVisible(true);
     }
@@ -58,23 +59,21 @@ public class ActManager {
             }
         return price*days;
     }
-
-    public static void changeReservation(String reservationNumber,String request) {
-        try
+    public static int getCapacity(LocalDate date) throws IOException {
+        List<String> lines = new ArrayList<String>();
+        int capacity=0;
+        File dateFile = new File("src\\" + date.toString()+".txt");
+        if (!dateFile.exists())
         {
-            File requestsFile = new File("../Requests");
-            if (requestsFile.createNewFile())
-            {
-                System.out.println("File created: " + requestsFile.getName());
+        }
+        else {
+            lines = readLinesFromFile("src\\" + date.toString() + ".txt");
+            for (int i = 0; i < lines.size(); i++) {
+                capacity += Integer.parseInt(lines.get(i));
             }
-            FileWriter myWriter = new FileWriter("../Requests");
-            myWriter.write("Reservation Number: "+reservationNumber+" Change request: "+request);
-            myWriter.close();
+            capacity=100-(int)((double)capacity/myHotel.getRoomsAmount()*100);
         }
-        catch (Exception e)
-        {
-        e.printStackTrace();
-        }
+        return capacity;
     }
     public static int countOccurences(String someString, char searchedChar) {
         int count=0;
@@ -88,6 +87,9 @@ public class ActManager {
         return count;
     }
     public static Reservation createReservation(int reservationNumber,String details,LocalDate checkIn,LocalDate checkOut,JLabel rooms) throws IOException {
+        Guest currentGuest= new Guest();
+        checkIn.plusYears(2000);
+        checkOut.plusYears(2000);
         Reservation newRes=new Reservation();
         int[] orderedRooms={0,0,0,0,0};
         int[] available=new int[5];
@@ -206,7 +208,7 @@ public class ActManager {
         List<Receptionist> receptionists = new ArrayList<Receptionist>();
         lines = readLinesFromFile("src\\ReceptionistLoginData");
         String name="",userName="",password="";
-        for (int i = 0; i < lines.size(); i += 3)
+        for (int i = 0; i < lines.size()-3; i += 3)
         {
             userName = lines.get(i);
             password = lines.get(i+1);
@@ -381,7 +383,7 @@ public class ActManager {
         }
         myWriter.close();
     }
-public static void changeRoomsAmount(String roomType, int amount) throws IOException {
+    public static void changeRoomsAmount(String roomType, int amount) throws IOException {
     List<String> lines = new ArrayList<String>();
     String pathName="src\\HotelData";
     lines=readLinesFromFile(pathName);

@@ -12,6 +12,7 @@ public class Hotel {
     public static  int deluxeAmount;//201-222
     public static  int premiumAmount;//301-315
     public static  int suiteAmount;//401-410
+    public int capacity=0;
     public static List<Receptionist> receptionistsList;
     public static List<Manager> managersList;
     public Hotel() throws IOException {
@@ -30,6 +31,9 @@ public class Hotel {
     public static int getNumOfReservations() {
         return numOfReservations;
     }
-
+    public int getRoomsAmount()
+    {
+        return twinAmount+familyAmount+deluxeAmount+premiumAmount+suiteAmount;
+    }
     public static int numOfReservations;
 }

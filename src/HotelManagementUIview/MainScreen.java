@@ -112,7 +112,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
     }
     private void changeReservationButtonMouseClicked() throws IOException {
         ActManager.baseScreen.setEnabled(false);
-        ActManager.actionScreen=new ChangeScreen();
+        ActManager.actionScreen=new HotelInfoScreen();
         ActManager.actionScreen.setVisible(true);
     }
     private void managerOptionsMouseClicked() throws IOException {
@@ -127,7 +127,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
     private void initComponents() {
         this.setDefaultCloseOperation(0);
         createReservationButton = new JButton();
-        changeReservationButton = new JButton();
+        viewHotelInfoButton = new JButton();
         cancelReservationButton = new JButton();
         viewReservationDetailsButton = new JButton();
         logoutButton = new JButton();
@@ -138,7 +138,6 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         label1 = new JLabel();
         backgroundLabel = new JLabel();
         managerOptionsButton =new JButton();
-
         //======== this ========
         setResizable(false);
         setTitle("MainScreen");
@@ -163,11 +162,11 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         createReservationButton.setBounds(265, 120, 295, 70);
         createReservationButton.setFont(createReservationButton.getFont().deriveFont(createReservationButton.getFont().getStyle() | Font.BOLD,20));
 
-        //---- changeReservationButton ----
-        changeReservationButton.setText("Change Reservation");
-        contentPane.add(changeReservationButton);
-        changeReservationButton.setBounds(265, 200, 295, 30);
-        changeReservationButton.addMouseListener(new MouseAdapter() {
+        //---- viewHotelInfoButton ----
+        viewHotelInfoButton.setText("View Hotel Information");
+        contentPane.add(viewHotelInfoButton);
+        viewHotelInfoButton.setBounds(265, 200, 295, 30);
+        viewHotelInfoButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
@@ -306,7 +305,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         setLocationRelativeTo(getOwner());
     }
     private JButton createReservationButton;
-    private JButton changeReservationButton;
+    private JButton viewHotelInfoButton;
     private JButton cancelReservationButton;
     private JButton viewReservationDetailsButton;
     private JButton logoutButton;

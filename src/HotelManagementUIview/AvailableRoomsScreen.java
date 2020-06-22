@@ -19,7 +19,7 @@ public class AvailableRoomsScreen extends JFrame {
         labelchanger=rooms;
 
         List<String> availableRooms= ActManager.showAvailableRooms(checkIn,checkOut);
-        dateslabel.setText("Check In: "+(checkIn.plusYears(2000)).toString()+"      Check Out: "+ (checkOut.plusYears(2000)).toString());
+        dateslabel.setText("Check In: "+checkIn.toString()+"      Check Out: "+ checkOut.toString());
         twinLabel.setText("Available Twin Rooms:" +availableRooms.get(0));
         familyLabel.setText("Available Family Rooms:"+availableRooms.get(1));
         deluxeLabel.setText("Available Deluxe Rooms:"+availableRooms.get(2));

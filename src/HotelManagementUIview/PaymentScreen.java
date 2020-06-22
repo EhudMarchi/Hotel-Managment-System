@@ -2,6 +2,7 @@ package HotelManagementUIview;
 
 import HotelManagementController.ActManager;
 import HotelManagementController.Program;
+import HotelManagmentModel.Guest;
 import HotelManagmentModel.Hotel;
 import java.awt.*;
 import java.awt.event.*;

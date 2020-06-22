@@ -12,9 +12,6 @@ import java.io.IOException;
 import java.util.List;
 import javax.swing.*;
 
-/**
- * @author Ehud
- */
 public class ManagerOptionsScreen extends JFrame {
 
     public ManagerOptionsScreen() throws IOException {
@@ -36,8 +33,8 @@ public class ManagerOptionsScreen extends JFrame {
             }
             else if(!ActManager.isUserExist(userNameTextField.getText(),false)){
            ActManager.addNewEmployee(false,NameTextField.getText(),userNameTextField.getText(),passwordTextField.getText());
-           JOptionPane.showMessageDialog(null, "New receptionist has been added", "Notice", JOptionPane.WARNING_MESSAGE);
-            ActManager.addNews("New receptionist has been added: "+NameTextField.getText());
+           JOptionPane.showMessageDialog(null, "New receptionist added", "Notice", JOptionPane.WARNING_MESSAGE);
+            ActManager.addNews("New receptionist added: "+NameTextField.getText());
             }
             else {
                 JOptionPane.showMessageDialog(null, "Receptionist username: "+userNameTextField.getText()+" is already exists",
@@ -52,8 +49,8 @@ public class ManagerOptionsScreen extends JFrame {
             }
             else if(!ActManager.isUserExist(userNameTextField.getText(),true)){
                 ActManager.addNewEmployee(true, NameTextField.getText(), userNameTextField.getText(), passwordTextField.getText());
-                JOptionPane.showMessageDialog(null, "New manager has been added", "Notice", JOptionPane.WARNING_MESSAGE);
-                ActManager.addNews("New manager has been added: " + NameTextField.getText());
+                JOptionPane.showMessageDialog(null, "New manager added", "Notice", JOptionPane.WARNING_MESSAGE);
+                ActManager.addNews("New manager added: " + NameTextField.getText());
             }
             else {
                 JOptionPane.showMessageDialog(null, "Manager username: "+userNameTextField.getText()+" is already exists",

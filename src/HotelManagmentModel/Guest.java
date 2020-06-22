@@ -10,6 +10,8 @@ public class Guest {
 
     public Guest() {
     }
+    public Guest(String guestName,String phoneNumber,String emailAddress) {
+    }
 
     public String getGuestName() {
         return guestName;

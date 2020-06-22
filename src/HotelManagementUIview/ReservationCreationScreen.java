@@ -21,7 +21,7 @@ public class ReservationCreationScreen extends JFrame {
     public ReservationCreationScreen(String name) throws ParseException {
         initComponents();
         recepName=name;
-        ActManager.refreshDate(checkIn.minusYears(2000),checkInDaySpinner,checkInMonthSpinner,checkInYearSpinner);
+        ActManager.refreshDate(checkIn,checkInDaySpinner,checkInMonthSpinner,checkInYearSpinner);
         ActManager.refreshDate(checkIn.plusDays(1),checkOutDaySpinner,checkOutMonthSpinner,checkOutYearSpinner);
     }
     private void CheckInChange() {
@@ -344,6 +344,11 @@ public class ReservationCreationScreen extends JFrame {
         contentPane.add(checkInDaySpinner);
         checkInDaySpinner.setBounds(250, 285, 45, 25);
         checkInDaySpinner.addChangeListener(e -> CheckInChange());
+        //---- checkIInYearSpinner3 ----
+        checkInYearSpinner.setModel(new SpinnerNumberModel(2020, 2020, 2100, 1));
+        contentPane.add(checkInYearSpinner);
+        checkInYearSpinner.setBounds(400, 285, 60, 25);
+        checkInYearSpinner.addChangeListener(e -> CheckInChange());
 
         //---- checkOutMonthSpinner ----
         checkOutMonthSpinner.setModel(new SpinnerNumberModel(1, 1, 12, 1));
@@ -356,13 +361,9 @@ public class ReservationCreationScreen extends JFrame {
         contentPane.add(checkOutDaySpinner);
         checkOutDaySpinner.setBounds(250, 315, 45, 25);
         checkOutDaySpinner.addChangeListener(e -> CheckOutChange());
-        //---- checkIInYearSpinner3 ----
-        checkInYearSpinner.setModel(new SpinnerNumberModel(20, 20, 99, 1));
-        contentPane.add(checkInYearSpinner);
-        checkInYearSpinner.setBounds(400, 285, 60, 25);
-        checkInYearSpinner.addChangeListener(e -> CheckInChange());
+
         //---- checkIOutYearSpinner ----
-        checkOutYearSpinner.setModel(new SpinnerNumberModel(20, 20, 99, 1));
+        checkOutYearSpinner.setModel(new SpinnerNumberModel(2020, 2020, 2100, 1));
         contentPane.add(checkOutYearSpinner);
         checkOutYearSpinner.setBounds(400, 315, 60, 25);
         checkOutYearSpinner.addChangeListener(e -> CheckOutChange());
@@ -395,7 +396,7 @@ public class ReservationCreationScreen extends JFrame {
             }
         });
         contentPane.add(backButton);
-        backButton.setBounds(700, 425, 100, 30);
+        backButton.setBounds(670, 425, 100, 30);
 
         //---- backgroundLabel ----
         backgroundLabel.setIcon(new ImageIcon(getClass().getResource("../MainScreenBackground.png")));
