@@ -12,14 +12,8 @@ import java.io.IOException;
 import java.text.ParseException;
 
 public class Program {
-//    public static JFrame baseScreen = new JFrame();
-//    public static JFrame actionScreen;
-//    public static JFrame roomsScreen;
-//    public static JFrame paymentScreen;
+
     public static void main(String [] args) throws ParseException, IOException {
-//        Hotel myHotel=new Hotel();
-//        baseScreen = new LoginScreen();
-//        baseScreen.setVisible(true);
         ActManager.runHotelManagementSystem();
     }
 }

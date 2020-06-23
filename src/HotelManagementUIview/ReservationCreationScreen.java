@@ -136,7 +136,7 @@ public class ReservationCreationScreen extends JFrame {
             if (Character.isDigit(validation[i]))
             {
                 int roomsAmount = Integer.parseInt(String.valueOf(validation[i]));
-                if(validation[i+2]=='F')
+                if(validation[i+2]=='F'||validation[i+3]=='F')
                 {
                     capacity+=(4* roomsAmount);
                 }

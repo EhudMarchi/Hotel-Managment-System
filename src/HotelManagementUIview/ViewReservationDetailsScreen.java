@@ -69,7 +69,7 @@ public class ViewReservationDetailsScreen extends JFrame {
         descriptionLabel.setForeground(Color.white);
         descriptionLabel.setFont(descriptionLabel.getFont().deriveFont(descriptionLabel.getFont().getStyle() | Font.BOLD,14));
         contentPane.add(descriptionLabel);
-        descriptionLabel.setBounds(250, 30, 430, 190);
+        descriptionLabel.setBounds(250, 30, 430, 210);
 
         //---- backButton ----
         backButton.setText("Back");

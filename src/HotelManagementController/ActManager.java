@@ -20,6 +20,7 @@ public class ActManager {
     public static JFrame roomsScreen;
     public static JFrame paymentScreen;
     private static Hotel myHotel;
+    //--------Methods--------
     public static void runHotelManagementSystem() throws IOException {
         myHotel=new Hotel();
         baseScreen = new LoginScreen();
@@ -62,12 +63,12 @@ public class ActManager {
     public static int getCapacity(LocalDate date) throws IOException {
         List<String> lines = new ArrayList<String>();
         int capacity=0;
-        File dateFile = new File("src\\" + date.toString()+".txt");
+        File dateFile = new File("src\\AvailabilityFiles\\" + date.toString()+".txt");
         if (!dateFile.exists())
         {
         }
         else {
-            lines = readLinesFromFile("src\\" + date.toString() + ".txt");
+            lines = readLinesFromFile("src\\AvailabilityFiles\\" + date.toString() + ".txt");
             for (int i = 0; i < lines.size(); i++) {
                 capacity += Integer.parseInt(lines.get(i));
             }
@@ -78,7 +79,7 @@ public class ActManager {
     public static void deleteOldAvailabilityFiles(LocalDate date) {
         if (date.isBefore(LocalDate.now())) {
             for (LocalDate i = date;i.isAfter(date.minusMonths(2)); i = i.minusDays(1)) {
-                File dateFile = new File("src\\" + i.toString() + ".txt");
+                File dateFile = new File("src\\AvailabilityFiles\\" + i.toString() + ".txt");
                 if (dateFile.exists()) {
                     dateFile.delete();
                 }
@@ -125,9 +126,9 @@ public class ActManager {
                 }
             }
         }
-        for (LocalDate i = checkIn; i.equals(checkOut) || i.isBefore(checkOut); i=i.plusDays(1))
+        for (LocalDate i = checkIn; i.isBefore(checkOut); i=i.plusDays(1))
         {
-            File dateFile = new File("src\\" + i.toString()+".txt");
+            File dateFile = new File("src\\AvailabilityFiles\\" + i.toString()+".txt");
             if (dateFile.createNewFile())
             {
                 available= new int[]{Hotel.twinAmount - orderedRooms[0], Hotel.familyAmount - orderedRooms[1], Hotel.deluxeAmount - orderedRooms[2], Hotel.premiumAmount - orderedRooms[3], Hotel.suiteAmount - orderedRooms[4]};
@@ -136,16 +137,16 @@ public class ActManager {
             else
             {
                 List<String> lines = new ArrayList<String>();
-                lines = readLinesFromFile("src\\" + i.toString()+".txt");
+                lines = readLinesFromFile("src\\AvailabilityFiles\\" + i.toString()+".txt");
                 for (int j = 0; j < lines.size(); j ++)
                 {
                     available[j]=Integer.parseInt(lines.get(j))-orderedRooms[j];
                 }
             }
-            File file =new File("src\\" + i.toString() + ".txt");
+            File file =new File("src\\AvailabilityFiles\\" + i.toString() + ".txt");
             file.delete();
             for(int j=0;j<available.length;j++) {
-                FileWriter myWriter = new FileWriter("src\\" + i.toString() + ".txt", true);
+                FileWriter myWriter = new FileWriter("src\\AvailabilityFiles\\" + i.toString() + ".txt", true);
                 myWriter.write(available[j] + "\n");
                 myWriter.close();
             }
@@ -157,7 +158,6 @@ public class ActManager {
     }
     public static String createReservationLine(String gName,String gEmail,String gPhone,String gAmount,String gRooms,LocalDate checkIn,LocalDate checkOut,String receptionistName) {
         String details="";
-//        details=" Guest Name: "+gName+"Guest Email: "+gEmail+" Guest Phone Number: "+gPhone+" Guests Amount: "+gAmount+" Guest Rooms: "+gRooms+" Check In Date: "+checkIn.toString()+" Check out Date: "+checkOut.toString()+" Receptionist Name: "+receptionistName;
         details="<br> Guest Name: "+gName+"<br>Guest Email: "+gEmail+"<br>"+"Guest Phone Number: "+gPhone+"<br>Guests Amount: "+gAmount+"<br>Guest Rooms: "+gRooms+"<br>Check In Date: "+checkIn.getDayOfMonth()+"/"+checkIn.getMonthValue()+"/"+checkIn.getYear()+"<br>Check Out Date: "+checkOut.getDayOfMonth()+"/"+checkOut.getMonthValue()+"/"+checkOut.getYear()+"<br>Receptionist Name: "+receptionistName+"<html>";
         return details;
     }
@@ -281,8 +281,9 @@ public class ActManager {
         String details="";
         lines = readLinesFromFile(pathName);
         for (int i = 0; i < lines.size(); i ++) {
-            if (lines.get(i).startsWith(reservationNumber)) {
+            if ((lines.get(i)).startsWith(reservationNumber)) {
                 details += lines.get(i);
+                break;
             }
         }
 
@@ -443,11 +444,6 @@ int value=0;
         myWriter.write(reservationNumber+"- Cancel Reason: "+cancelReason+"\n");
         myWriter.close();
     }
-    public static void addChangeRequest(String reservationNumber, String change, String cancelReason) throws IOException {
-        FileWriter myWriter = new FileWriter("src\\Requests",true);
-        myWriter.write(reservationNumber+"- Change wanted:" + change+", Change Reason: "+cancelReason+"\n");
-        myWriter.close();
-    }
     public static String[] readReservationsNumber(JComboBox reservations) throws IOException {
         List<String> lines = new ArrayList<String>();
         lines = readLinesFromFile("src\\ReservationsData");
@@ -505,9 +501,9 @@ int value=0;
         int[] minimuns = {Hotel.twinAmount, Hotel.familyAmount, Hotel.deluxeAmount, Hotel.premiumAmount, Hotel.suiteAmount};
         for (LocalDate i = checkIn; i.equals(checkOut) || i.isBefore(checkOut); i=i.plusDays(1))
         {
-            File dateFile = new File("src\\" + i.toString()+".txt");
+            File dateFile = new File("src\\AvailabilityFiles\\" + i.toString()+".txt");
             if (dateFile.exists()) {
-                lines = readLinesFromFile("src\\" + i.toString()+".txt");
+                lines = readLinesFromFile("src\\AvailabilityFiles\\" + i.toString()+".txt");
                 for (int j = 0; j < lines.size(); j++) {
                     minimuns[j] = getMin(minimuns[j], Integer.parseInt(lines.get(j)));
                 }

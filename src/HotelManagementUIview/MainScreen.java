@@ -135,7 +135,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         newsLabel = new JLabel();
         newsHeadLineLabel = new JLabel();
         requestsButton = new JButton();
-        label1 = new JLabel();
+        hotelNameLabel = new JLabel();
         logoLabel = new JLabel();
         backgroundLabel = new JLabel();
         managerOptionsButton =new JButton();
@@ -275,15 +275,15 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
             }
         });
 
-        //---- label1 ----
-        label1.setText("\"Hotel Name\"");
-        label1.setFont(label1.getFont().deriveFont(label1.getFont().getStyle() | Font.BOLD, label1.getFont().getSize() + 19f));
-        label1.setHorizontalAlignment(SwingConstants.CENTER);
-        label1.setForeground(Color.WHITE);
-        label1.setBackground(Color.black);
-        label1.setOpaque(true);
-        contentPane.add(label1);
-        label1.setBounds(290, 35, 250, 40);
+        //---- hotelNameLabel ----
+        hotelNameLabel.setText("\"Hotel Name\"");
+        hotelNameLabel.setFont(hotelNameLabel.getFont().deriveFont(hotelNameLabel.getFont().getStyle() | Font.BOLD, hotelNameLabel.getFont().getSize() + 19f));
+        hotelNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        hotelNameLabel.setForeground(Color.WHITE);
+        hotelNameLabel.setBackground(Color.black);
+        hotelNameLabel.setOpaque(true);
+        contentPane.add(hotelNameLabel);
+        hotelNameLabel.setBounds(290, 35, 250, 40);
 
         //---- logoLabel ----
         logoLabel.setIcon(new ImageIcon(getClass().getResource("../ASHMS logo.png")));
@@ -322,7 +322,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
     private JLabel newsHeadLineLabel;
     private JButton requestsButton;
     private JButton managerOptionsButton;
-    private JLabel label1;
+    private JLabel hotelNameLabel;
     private JLabel logoLabel;
     private JLabel backgroundLabel;
     private String recepName;
