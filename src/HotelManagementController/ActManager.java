@@ -75,6 +75,16 @@ public class ActManager {
         }
         return capacity;
     }
+    public static void deleteOldAvailabilityFiles(LocalDate date) {
+        if (date.isBefore(LocalDate.now())) {
+            for (LocalDate i = date;i.isAfter(date.minusMonths(2)); i = i.minusDays(1)) {
+                File dateFile = new File("src\\" + i.toString() + ".txt");
+                if (dateFile.exists()) {
+                    dateFile.delete();
+                }
+            }
+        }
+    }
     public static int countOccurences(String someString, char searchedChar) {
         int count=0;
         for(int i=0;i<someString.length();i++)

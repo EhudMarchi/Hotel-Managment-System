@@ -2,13 +2,15 @@
 package HotelManagementUIview;
 
 import HotelManagementController.ActManager;
-import HotelManagementController.Program;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import javax.swing.*;
 
 /**
@@ -22,16 +24,46 @@ public class HotelInfoScreen extends JFrame {
         ActManager.baseScreen.setEnabled(true);
         ActManager.actionScreen.dispose();
     }
+    private String getRoomsAmount(String roomType)
+    {
+        int amount=0;
+        List<String> availableRooms= ActManager.readLinesFromFile("src\\HotelData");
+        if(roomTypeComboBox.getSelectedItem().toString().contains("Twin")) {
+            amount=Integer.parseInt(availableRooms.get(0));
+        }
+        else if(roomTypeComboBox.getSelectedItem().toString().contains("Family")) {
+            amount=Integer.parseInt(availableRooms.get(1));
+        }
+        else if(roomTypeComboBox.getSelectedItem().toString().contains("Deluxe")) {
+            amount=Integer.parseInt(availableRooms.get(2));
+        }
+        else if(roomTypeComboBox.getSelectedItem().toString().contains("Premium")) {
+            amount=Integer.parseInt(availableRooms.get(3));
+        }
+        else if(roomTypeComboBox.getSelectedItem().toString().contains("Suite")) {
+            amount=Integer.parseInt(availableRooms.get(4));
+        }
+
+        return String.valueOf(amount);
+    }
+
+    private void roomTypeComboBoxactionPerformed() {
+        roomsAmountLabel.setText(getRoomsAmount(roomTypeComboBox.getSelectedItem().toString()));
+    }
     private void initComponents() throws IOException {
         this.setDefaultCloseOperation(0);
         capacityLabel = new JLabel();
         dateLabel = new JLabel();
+        roomsLabel = new JLabel();
+        roomsAmountLabel = new JLabel();
         capacityValueLabel = new JLabel();
         backButton = new JButton();
         backgroundLabel = new JLabel();
         dateDaySpinner = new JSpinner();
         dateYearSpinner = new JSpinner();
         dateMonthSpinner = new JSpinner();
+        String[] roomsString = { "Twin","Family", "Deluxe", "Premium", "Suite"};
+        roomTypeComboBox =new JComboBox(roomsString);
         //======== this ========
         setResizable(false);
         setTitle("Hotel Info");
@@ -74,7 +106,35 @@ public class HotelInfoScreen extends JFrame {
         dateYearSpinner.setModel(new SpinnerNumberModel(2020, 2020, 2100, 1));
         contentPane.add(dateYearSpinner);
         dateYearSpinner.setBounds(540, 140, 60, 25);
+        //---- roomTypeComboBox ----
+        roomTypeComboBox.setBackground(Color.white);
+        roomTypeComboBox.setForeground(Color.black);
+        roomTypeComboBox.setFont(roomTypeComboBox.getFont().deriveFont(roomTypeComboBox.getFont().getStyle() | Font.BOLD));
+        contentPane.add(roomTypeComboBox);
+        roomTypeComboBox.setBounds(210, 245, 150, 30);
+        roomTypeComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                roomTypeComboBoxactionPerformed();
+            }
+        });
+        //---- roomsLabel ----
+        roomsLabel.setText("Rooms Amount:");
+        roomsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        roomsLabel.setFont(roomsLabel.getFont().deriveFont(roomsLabel.getFont().getStyle() | Font.BOLD,20));
+        roomsLabel.setForeground(Color.white);
+        contentPane.add(roomsLabel);
+        roomsLabel.setBounds(260, 200, 200, 45);
 
+        //---- roomsAmountLabel ----
+        roomsAmountLabel.setText(getRoomsAmount(roomTypeComboBox.getSelectedItem().toString()));
+        roomsAmountLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        roomsAmountLabel.setFont(roomsAmountLabel.getFont().deriveFont(roomsLabel.getFont().getStyle() | Font.BOLD,17));
+        roomsAmountLabel.setForeground(Color.white);
+        roomsAmountLabel.setOpaque(true);
+        roomsAmountLabel.setBackground(Color.black);
+        contentPane.add(roomsAmountLabel);
+        roomsAmountLabel.setBounds(395, 245, 70, 30);
         //---- backButton ----
         backButton.setText("Back");
         backButton.setForeground(new Color(51, 51, 51));
@@ -151,10 +211,13 @@ public class HotelInfoScreen extends JFrame {
 
     private JLabel capacityLabel;
     private JLabel dateLabel;
+    private JLabel roomsLabel;
+    private JLabel roomsAmountLabel;
     private JLabel capacityValueLabel;
     private JButton backButton;
     private JLabel backgroundLabel;
     private JSpinner dateMonthSpinner;
     private JSpinner dateDaySpinner;
     private JSpinner dateYearSpinner;
+    private JComboBox roomTypeComboBox;
 }

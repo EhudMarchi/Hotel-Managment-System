@@ -136,6 +136,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         newsHeadLineLabel = new JLabel();
         requestsButton = new JButton();
         label1 = new JLabel();
+        logoLabel = new JLabel();
         backgroundLabel = new JLabel();
         managerOptionsButton =new JButton();
         //======== this ========
@@ -278,9 +279,16 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         label1.setText("\"Hotel Name\"");
         label1.setFont(label1.getFont().deriveFont(label1.getFont().getStyle() | Font.BOLD, label1.getFont().getSize() + 19f));
         label1.setHorizontalAlignment(SwingConstants.CENTER);
+        label1.setForeground(Color.WHITE);
+        label1.setBackground(Color.black);
+        label1.setOpaque(true);
         contentPane.add(label1);
-        label1.setBounds(215, 25, 385, 65);
+        label1.setBounds(290, 35, 250, 40);
 
+        //---- logoLabel ----
+        logoLabel.setIcon(new ImageIcon(getClass().getResource("../ASHMS logo.png")));
+        contentPane.add(logoLabel);
+        logoLabel.setBounds(605, 160, 150, 150);
 
         //---- backgroundLabel ----
         backgroundLabel.setIcon(new ImageIcon(getClass().getResource("../MainScreenBackground.png")));
@@ -315,6 +323,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
     private JButton requestsButton;
     private JButton managerOptionsButton;
     private JLabel label1;
+    private JLabel logoLabel;
     private JLabel backgroundLabel;
     private String recepName;
     private boolean managerMode;

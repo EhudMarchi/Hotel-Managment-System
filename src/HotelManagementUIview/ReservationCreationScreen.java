@@ -69,7 +69,7 @@ public class ReservationCreationScreen extends JFrame {
     }
     protected boolean DateValidation(LocalDate checkin,LocalDate checkout)
     {
-        if(checkin.isEqual(checkout)||checkin.isAfter(checkout))
+        if(checkin.isEqual(checkout)||checkin.isAfter(checkout)||checkin.isBefore(LocalDate.now()))
         {
             return false;
         }

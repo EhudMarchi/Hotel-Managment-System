@@ -1,7 +1,6 @@
 package HotelManagementUIview;
 
 import HotelManagementController.ActManager;
-import HotelManagementController.Program;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.*;
 
@@ -82,6 +82,14 @@ public class ManagerOptionsScreen extends JFrame {
             roomsAmount*=(-1);
             JOptionPane.showMessageDialog(null, roomsAmount+" "+roomType+" rooms has been removed", "Notice", JOptionPane.WARNING_MESSAGE);
         }
+        else if(optionsComboBox.getSelectedItem().toString().contains("Delete Old"))
+        {
+            LocalDate date =LocalDate.of((Integer) dateYearSpinner.getValue(),(Integer)dateMonthSpinner.getValue(),(Integer) dateDaySpinner.getValue());
+            ActManager.deleteOldAvailabilityFiles(date);
+            JOptionPane.showMessageDialog(null, "Rooms availability files before: "+date.toString()+" has been removed", "Notice", JOptionPane.WARNING_MESSAGE);
+        }
+
+
         ActManager.actionScreen.dispose();
         ActManager.actionScreen=new ManagerOptionsScreen();
         ActManager.actionScreen.setVisible(true);
@@ -118,6 +126,10 @@ public class ManagerOptionsScreen extends JFrame {
         if(optionsComboBox.getSelectedItem().toString().contains("Receptionist")||optionsComboBox.getSelectedItem().toString().contains("Manager")) {
             roomTypeComboBox.setVisible(false);
             roomsSpinner.setVisible(false);
+            dateDaySpinner.setVisible(false);
+            dateMonthSpinner.setVisible(false);
+            dateYearSpinner.setVisible(false);
+            lastDateLabel.setVisible(false);
             if(optionsComboBox.getSelectedItem().toString().contains("Remove"))
             {
                 receptionistNameLabel.setVisible(false);
@@ -148,7 +160,7 @@ public class ManagerOptionsScreen extends JFrame {
             recepComboBox.setVisible((false));
             }
         }
-        else
+        else if (!optionsComboBox.getSelectedItem().toString().contains("Old"))
         {
             SpinnerNumberModel spinnerModel = new SpinnerNumberModel(0,0,null,1);
             roomsSpinner.setModel(spinnerModel);
@@ -167,6 +179,27 @@ public class ManagerOptionsScreen extends JFrame {
             roomsSpinner.setVisible(true);
             managerComboBox.setVisible(false);
             recepComboBox.setVisible((false));
+            dateDaySpinner.setVisible(false);
+            dateMonthSpinner.setVisible(false);
+            dateYearSpinner.setVisible(false);
+            lastDateLabel.setVisible(false);
+        }
+        else
+        {
+            receptionistNameLabel.setVisible(false);
+            NameTextField.setVisible(false);
+            receptionistUserNameLabel.setVisible(false);
+            userNameTextField.setVisible(false);
+            receptionistPasswordLabel.setVisible(false);
+            passwordTextField.setVisible(false);
+            roomTypeComboBox.setVisible(false);
+            roomsSpinner.setVisible(false);
+            managerComboBox.setVisible(false);
+            recepComboBox.setVisible(false);
+            dateDaySpinner.setVisible(true);
+            dateMonthSpinner.setVisible(true);
+            dateYearSpinner.setVisible(true);
+            lastDateLabel.setVisible(true);
         }
     }
     public String nameValidation(String Name)
@@ -189,7 +222,7 @@ public class ManagerOptionsScreen extends JFrame {
     }
     private void initComponents() throws IOException {
         this.setDefaultCloseOperation(0);
-        String[] optionsString = { "Choose:","Add Receptionist", "Remove Receptionist","Add Manager", "Remove Manager", "Add Rooms", "Remove Rooms"};
+        String[] optionsString = { "Choose:","Add Receptionist", "Remove Receptionist","Add Manager", "Remove Manager", "Add Rooms", "Remove Rooms","Delete Old Reservations"};
         optionsComboBox = new JComboBox(optionsString);
         String[] roomsString = { "Twin","Family", "Deluxe", "Premium", "Suite"};
         roomTypeComboBox =new JComboBox(roomsString);
@@ -201,6 +234,7 @@ public class ManagerOptionsScreen extends JFrame {
         backButton = new JButton();
         confirmButton = new JButton();
         backgroundLabel = new JLabel();
+        lastDateLabel = new JLabel();
         receptionistNameLabel=new JLabel();
         receptionistUserNameLabel=new JLabel();
         receptionistPasswordLabel =new JLabel();
@@ -208,6 +242,9 @@ public class ManagerOptionsScreen extends JFrame {
         userNameTextField=new JFormattedTextField();
         passwordTextField=new JFormattedTextField();
         roomsSpinner = new JSpinner();
+        dateDaySpinner = new JSpinner();
+        dateYearSpinner = new JSpinner();
+        dateMonthSpinner = new JSpinner();
         //======== this ========
         setResizable(false);
         setTitle("Manager Options");
@@ -347,13 +384,39 @@ public class ManagerOptionsScreen extends JFrame {
         receptionistPasswordLabel.setForeground(Color.white);
         receptionistPasswordLabel.setBackground(Color.black);
         receptionistPasswordLabel.setVisible(false);
-
+        //---- dateMonthSpinner ----
+        dateMonthSpinner.setModel(new SpinnerNumberModel(1, 1, 12, 1));
+        contentPane.add(dateMonthSpinner);
+        dateMonthSpinner.setBounds(365, 240, 65, 25);
+        dateMonthSpinner.setVisible(false);
+        //---- dateDaySpinner ----
+        dateDaySpinner.setModel(new SpinnerNumberModel(1, 1, 31, 1));
+        contentPane.add(dateDaySpinner);
+        dateDaySpinner.setBounds(280, 240, 45, 25);
+        dateDaySpinner.setVisible(false);
+        //---- checkIInYearSpinner3 ----
+        dateYearSpinner.setModel(new SpinnerNumberModel(2020, 2020, 2100, 1));
+        contentPane.add(dateYearSpinner);
+        dateYearSpinner.setBounds(470, 240, 60, 25);
+        dateYearSpinner.setVisible(false);
+        //---- lastDateLabel ----
+        lastDateLabel.setText("Delete All Rooms Availability Files Before:");
+        lastDateLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lastDateLabel.setFont(lastDateLabel.getFont().deriveFont(lastDateLabel.getFont().getStyle() | Font.BOLD,20));
+        lastDateLabel.setForeground(Color.orange);
+        lastDateLabel.setOpaque(true);
+        lastDateLabel.setBackground(Color.black);
+        contentPane.add(lastDateLabel);
+        lastDateLabel.setBounds(155, 185, 500, 35);
+        lastDateLabel.setVisible(false);
         //---- passwordTextField ----
         contentPane.add(passwordTextField);
         passwordTextField.setBounds(335, 260, 250, 30);
         passwordTextField.setOpaque(true);
         passwordTextField.setFont(new Font("Segoe UI", Font.BOLD, 12));
         passwordTextField.setVisible(false);
+
+        ActManager.refreshDate(LocalDate.now().minusDays(1),dateDaySpinner,dateMonthSpinner,dateYearSpinner);
 
         //---- backgroundLabel ----
         backgroundLabel.setText("text");
@@ -394,4 +457,8 @@ public class ManagerOptionsScreen extends JFrame {
     private JFormattedTextField userNameTextField;
     private JFormattedTextField passwordTextField;
     private JSpinner roomsSpinner;
+    private JLabel lastDateLabel;
+    private JSpinner dateMonthSpinner;
+    private JSpinner dateDaySpinner;
+    private JSpinner dateYearSpinner;
 }
