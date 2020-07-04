@@ -86,7 +86,7 @@ public class ActManager {
             }
         }
     }
-    public static int countOccurences(String someString, char searchedChar) {
+    public static int countOccurrences(String someString, char searchedChar) {
         int count=0;
         for(int i=0;i<someString.length();i++)
         {

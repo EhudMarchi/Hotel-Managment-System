@@ -2,7 +2,6 @@
 package HotelManagementUIview;
 
 import HotelManagementController.ActManager;
-import HotelManagementController.Program;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -120,7 +119,7 @@ public class ReservationCreationScreen extends JFrame {
     }
     public boolean emailValidation(String email) {
         boolean isValid=true;
-        if((ActManager.countOccurences(email,'.')<1)||(ActManager.countOccurences(email,'@')!=1)||(email.startsWith("@"))||(email.endsWith("@"))||(email.endsWith("."))||(email.startsWith(".")))
+        if((ActManager.countOccurrences(email,'.')<1)||(ActManager.countOccurrences(email,'@')!=1)||(email.startsWith("@"))||(email.endsWith("@"))||(email.endsWith("."))||(email.startsWith(".")))
         {
             isValid=false;
         }

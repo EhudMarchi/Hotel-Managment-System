@@ -19,7 +19,7 @@ public class MainScreen extends JFrame {//Singelton Design Pettern
         int runTimes=0;
         @Override
         public void run() {
-            if(ActManager.countOccurences(newsLabel.getText(),'>')>46)
+            if(ActManager.countOccurrences(newsLabel.getText(),'>')>46)
             {
                 newsData=ActManager.readLinesFromFile("src\\News")+"<html>";
                 if(newsData.length()>10)
